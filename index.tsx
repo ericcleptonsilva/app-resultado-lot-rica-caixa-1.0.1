@@ -2,7 +2,18 @@ import React, { useState, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
 // --- Configurações ---
 
-const LOTTERIES = {
+interface LotteryConfig {
+  name: string;
+  color: string;
+  balls: number;
+  draw: number;
+  betLength: number;
+  awards: number[];
+  startZero?: boolean;
+  textColor?: string;
+}
+
+const LOTTERIES: Record<string, LotteryConfig> = {
   megasena: { name: "Mega-Sena", color: "#209869", balls: 60, draw: 6, betLength: 6, awards: [4, 5, 6] },
   lotofacil: { name: "Lotofácil", color: "#930089", balls: 25, draw: 15, betLength: 15, awards: [11, 12, 13, 14, 15] },
   quina: { name: "Quina", color: "#260085", balls: 80, draw: 5, betLength: 5, awards: [2, 3, 4, 5] },
@@ -486,8 +497,8 @@ const App = () => {
 
     const available = [];
     // Gerar range disponível
-    const start = (config as any).startZero ? 0 : 1;
-    const end = (config as any).startZero ? 99 : config.balls;
+    const start = config.startZero ? 0 : 1;
+    const end = config.startZero ? 99 : config.balls;
 
     for (let i = start; i <= end; i++) {
       const numStr = i.toString().padStart(2, '0');
@@ -574,8 +585,8 @@ const App = () => {
     });
 
     // Gerar grid de números para seleção
-    const start = (config as any).startZero ? 0 : 1;
-    const end = (config as any).startZero ? 99 : config.balls;
+    const start = config.startZero ? 0 : 1;
+    const end = config.startZero ? 99 : config.balls;
     const gridNumbers = [];
     for (let i = start; i <= end; i++) {
         gridNumbers.push(i.toString().padStart(2, '0'));
