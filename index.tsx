@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
 // --- Configurações ---
 
@@ -336,6 +336,8 @@ const App = () => {
   const [aiLoading, setAiLoading] = useState(false);
   const [aiPrediction, setAiPrediction] = useState<{numbers: string[], message: string} | null>(null);
 
+  const resultsCache = useRef<Record<string, LotteryResult>>({});
+
   const themeColor = LOTTERIES[currentLottery as keyof typeof LOTTERIES].color;
   const config = LOTTERIES[currentLottery as keyof typeof LOTTERIES];
 
@@ -361,12 +363,18 @@ const App = () => {
   }, [myGames, currentLottery]);
 
   const fetchResult = async (lottery: string) => {
+    if (resultsCache.current[lottery]) {
+      setResult(resultsCache.current[lottery]);
+      return;
+    }
+
     setLoading(true);
     try {
       // URL oficial da Caixa
       const response = await fetch(`https://servicebus2.caixa.gov.br/portaldeloterias/api/${lottery}`);
       if (!response.ok) throw new Error("Falha na API da Caixa");
       const data = await response.json();
+      resultsCache.current[lottery] = data;
       setResult(data);
     } catch (error) {
       console.error("Erro ao buscar resultado:", error);
