@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import { GoogleGenAI } from "@google/genai";
-
 // --- Configurações ---
 
 const LOTTERIES = {
@@ -426,36 +424,28 @@ const App = () => {
   };
 
   const handleGenerateAiPrediction = async () => {
-    if (!process.env.API_KEY) {
-      alert("API Key não configurada");
-      return;
-    }
     setAiLoading(true);
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY as string });
-      const model = "gemini-3-flash-preview";
-
-      const prompt = `
-        Atue como um especialista em análise combinatória e sorte.
-        Gere um palpite para a loteria ${config.name}.
-        Eu preciso de ${config.betLength} números distintos entre 1 e ${config.balls}.
-        
-        Responda APENAS com este JSON exato, sem markdown:
-        {
-          "numbers": ["01", "02", ...],
-          "message": "Uma frase curta e mística sobre sorte e prosperidade"
-        }
-      `;
-
-      const response = await ai.models.generateContent({
-        model: model,
-        contents: prompt,
-        config: { responseMimeType: "application/json" }
+      const response = await fetch("/api/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: config.name,
+          betLength: config.betLength,
+          balls: config.balls,
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error("Falha na resposta do servidor");
+      }
+
+      const data = await response.json();
       
-      const text = response.text;
-      if (text) {
-        const json = JSON.parse(text);
+      if (data.text) {
+        const json = JSON.parse(data.text);
         setAiPrediction(json);
       }
     } catch (error) {
