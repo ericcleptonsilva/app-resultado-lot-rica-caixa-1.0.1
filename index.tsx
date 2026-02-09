@@ -327,7 +327,7 @@ const AdBanner = ({ fixed = false }: { fixed?: boolean }) => {
 
 // --- Componente Principal ---
 
-const App = () => {
+export const App = () => {
   const [currentLottery, setCurrentLottery] = useState("megasena");
   const [result, setResult] = useState<LotteryResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -905,5 +905,8 @@ const App = () => {
   );
 };
 
-const root = createRoot(document.getElementById("root")!);
-root.render(<App />);
+const rootElement = document.getElementById("root");
+if (rootElement) {
+  const root = createRoot(rootElement);
+  root.render(<App />);
+}
