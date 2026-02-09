@@ -313,6 +313,27 @@ interface Game {
   targetContest?: number;
 }
 
+// --- Funções Auxiliares ---
+
+const safeParseGames = (jsonString: string): Game[] => {
+  try {
+    const parsed = JSON.parse(jsonString);
+    if (!Array.isArray(parsed)) return [];
+
+    // Filtrar entradas inválidas
+    return parsed.filter((item: any) =>
+      item &&
+      typeof item === 'object' &&
+      typeof item.id === 'number' &&
+      Array.isArray(item.numbers) &&
+      item.numbers.every((n: any) => typeof n === 'string')
+    );
+  } catch (error) {
+    console.warn("Falha ao analisar jogos do localStorage", error);
+    return [];
+  }
+};
+
 // --- Componente de Anúncio ---
 const AdBanner = ({ fixed = false }: { fixed?: boolean }) => {
   return (
@@ -356,7 +377,7 @@ const App = () => {
   useEffect(() => {
     const saved = localStorage.getItem(`games_${currentLottery}`);
     if (saved) {
-      setMyGames(JSON.parse(saved));
+      setMyGames(safeParseGames(saved));
     } else {
       setMyGames([]);
     }
