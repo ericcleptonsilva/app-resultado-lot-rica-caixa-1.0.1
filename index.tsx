@@ -22,6 +22,8 @@ const LOTTERIES: Record<string, LotteryConfig> = {
   diadesorte: { name: "Dia de Sorte", color: "#cb852b", balls: 31, draw: 7, betLength: 7, awards: [4, 5, 6, 7] },
 };
 
+const CAIXA_API_BASE_URL = "https://servicebus2.caixa.gov.br/portaldeloterias/api";
+
 // --- Estilos ---
 
 const styles = {
@@ -382,7 +384,7 @@ const App = () => {
     setLoading(true);
     try {
       // URL oficial da Caixa
-      const response = await fetch(`https://servicebus2.caixa.gov.br/portaldeloterias/api/${lottery}`);
+      const response = await fetch(`${CAIXA_API_BASE_URL}/${lottery}`);
       if (!response.ok) throw new Error("Falha na API da Caixa");
       const data = await response.json();
       resultsCache.current[lottery] = data;
@@ -412,7 +414,7 @@ const App = () => {
       if (contestNumber <= 0) break;
       // Endpoint para concursos específicos na API oficial
       promises.push(
-        fetch(`https://servicebus2.caixa.gov.br/portaldeloterias/api/${currentLottery}/${contestNumber}`)
+        fetch(`${CAIXA_API_BASE_URL}/${currentLottery}/${contestNumber}`)
           .then(res => res.ok ? res.json() : null)
           .catch(() => null)
       );
