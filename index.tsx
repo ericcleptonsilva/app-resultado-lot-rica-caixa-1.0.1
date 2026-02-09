@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
+import { secureShuffle } from "./utils";
 // --- Configurações ---
 
 interface LotteryConfig {
@@ -508,7 +509,7 @@ const App = () => {
     }
 
     // Embaralhar e pegar os necessários
-    const shuffled = available.sort(() => 0.5 - Math.random());
+    const shuffled = secureShuffle(available);
     const randomPick = shuffled.slice(0, needed);
     
     setSelectedNumbers(prev => [...prev, ...randomPick].sort((a, b) => parseInt(a) - parseInt(b)));
