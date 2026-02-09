@@ -325,6 +325,16 @@ const AdBanner = ({ fixed = false }: { fixed?: boolean }) => {
   );
 };
 
+// Algoritmo de embaralhamento Fisher-Yates (mais performático e imparcial que sort)
+function fisherYatesShuffle<T>(array: T[]): T[] {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
+
 // --- Componente Principal ---
 
 const App = () => {
@@ -508,7 +518,7 @@ const App = () => {
     }
 
     // Embaralhar e pegar os necessários
-    const shuffled = available.sort(() => 0.5 - Math.random());
+    const shuffled = fisherYatesShuffle(available);
     const randomPick = shuffled.slice(0, needed);
     
     setSelectedNumbers(prev => [...prev, ...randomPick].sort((a, b) => parseInt(a) - parseInt(b)));
