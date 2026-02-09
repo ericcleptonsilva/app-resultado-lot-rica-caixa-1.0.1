@@ -388,7 +388,7 @@ const App = () => {
       resultsCache.current[lottery] = data;
       setResult(data);
     } catch (error) {
-      console.error("Erro ao buscar resultado:", error);
+      console.error("Erro ao buscar resultado:", error instanceof Error ? error.message : String(error));
       alert("Erro ao conectar com a API oficial da Caixa. Verifique sua conexão ou restrições de rede (CORS).");
     } finally {
       setLoading(false);
@@ -436,7 +436,7 @@ const App = () => {
       setStats(sortedStats);
       setStatsLoadedFor(currentLottery);
     } catch (error) {
-      console.error("Erro ao calcular estatísticas", error);
+      console.error("Erro ao calcular estatísticas", error instanceof Error ? error.message : String(error));
     } finally {
       setLoadingStats(false);
     }
@@ -468,7 +468,7 @@ const App = () => {
         setAiPrediction(json);
       }
     } catch (error) {
-      console.error("Erro na IA:", error);
+      console.error("Erro na IA:", error instanceof Error ? error.message : String(error));
       alert("A IA está recarregando suas energias cósmicas. Tente novamente.");
     } finally {
       setAiLoading(false);
