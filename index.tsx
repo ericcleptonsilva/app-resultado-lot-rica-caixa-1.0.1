@@ -348,6 +348,7 @@ const App = () => {
   const [aiPrediction, setAiPrediction] = useState<{numbers: string[], message: string} | null>(null);
 
   const resultsCache = useRef<Record<string, LotteryResult>>({});
+  const statsCache = useRef<Record<string, { stats: Stat[], contestNumber: number }>>({});
 
   const themeColor = LOTTERIES[currentLottery as keyof typeof LOTTERIES].color;
   const config = LOTTERIES[currentLottery as keyof typeof LOTTERIES];
@@ -397,6 +398,15 @@ const App = () => {
 
   const fetchHistoryForStats = async () => {
     if (!result) return;
+
+    const currentContest = result.numero;
+
+    if (statsCache.current[currentLottery] && statsCache.current[currentLottery].contestNumber === currentContest) {
+      setStats(statsCache.current[currentLottery].stats);
+      setStatsLoadedFor(currentLottery);
+      return;
+    }
+
     if (statsLoadedFor === currentLottery) return;
 
     setLoadingStats(true);
@@ -404,7 +414,6 @@ const App = () => {
     const promises: Promise<any>[] = [];
     
     // Buscar últimos 10 concursos
-    const currentContest = result.numero;
     const numberOfDrawsToFetch = 10;
 
     for (let i = 0; i < numberOfDrawsToFetch; i++) {
@@ -433,6 +442,7 @@ const App = () => {
         .map(([number, count]) => ({ number, count }))
         .sort((a, b) => b.count - a.count); // Mais frequentes primeiro
 
+      statsCache.current[currentLottery] = { stats: sortedStats, contestNumber: currentContest };
       setStats(sortedStats);
       setStatsLoadedFor(currentLottery);
     } catch (error) {
