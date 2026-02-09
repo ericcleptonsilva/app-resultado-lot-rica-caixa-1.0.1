@@ -350,6 +350,7 @@ const App = () => {
   const [aiPrediction, setAiPrediction] = useState<{numbers: string[], message: string} | null>(null);
 
   const resultsCache = useRef<Record<string, LotteryResult>>({});
+  const statsCache = useRef<Record<string, Stat[]>>({});
 
   const themeColor = LOTTERIES[currentLottery as keyof typeof LOTTERIES].color;
   const config = LOTTERIES[currentLottery as keyof typeof LOTTERIES];
@@ -365,8 +366,13 @@ const App = () => {
     // Resetar seleção ao mudar loteria
     setSelectedNumbers([]);
     setAiPrediction(null);
-    setStats([]);
-    setStatsLoadedFor("");
+    if (statsCache.current[currentLottery]) {
+      setStats(statsCache.current[currentLottery]);
+      setStatsLoadedFor(currentLottery);
+    } else {
+      setStats([]);
+      setStatsLoadedFor("");
+    }
     fetchResult(currentLottery);
   }, [currentLottery]);
 
@@ -400,6 +406,12 @@ const App = () => {
   const fetchHistoryForStats = async () => {
     if (!result) return;
     if (statsLoadedFor === currentLottery) return;
+
+    if (statsCache.current[currentLottery]) {
+      setStats(statsCache.current[currentLottery]);
+      setStatsLoadedFor(currentLottery);
+      return;
+    }
 
     setLoadingStats(true);
     const historyCounts: Record<string, number> = {};
@@ -437,6 +449,7 @@ const App = () => {
 
       setStats(sortedStats);
       setStatsLoadedFor(currentLottery);
+      statsCache.current[currentLottery] = sortedStats;
     } catch (error) {
       console.error("Erro ao calcular estatísticas", error);
     } finally {
