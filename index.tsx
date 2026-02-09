@@ -132,6 +132,8 @@ const styles = {
     transition: "all 0.2s ease",
     userSelect: "none" as const,
     boxShadow: selected ? `0 3px 8px ${color}60` : "none",
+    padding: 0,
+    appearance: "none" as const,
   }),
   ballsContainer: {
     display: "flex",
@@ -614,13 +616,16 @@ const App = () => {
 
           <div style={styles.gridContainer}>
             {gridNumbers.map(num => (
-              <div 
-                key={num} 
+              <button
+                key={num}
+                type="button"
                 onClick={() => handleToggleNumber(num)}
+                aria-label={`Selecionar número ${num}`}
+                aria-pressed={selectedNumbers.includes(num)}
                 style={styles.selectableBall(selectedNumbers.includes(num), themeColor)}
               >
                 {num}
-              </div>
+              </button>
             ))}
           </div>
 
@@ -719,6 +724,7 @@ const App = () => {
               <div style={{textAlign: "right", marginTop: "10px"}}>
                 <button 
                   onClick={() => handleDeleteGame(game.id)}
+                  aria-label={`Remover jogo ${game.id}`}
                   style={{background: "none", border: "none", color: "#ff4444", cursor: "pointer", fontSize: "12px"}}
                 >
                   Remover
@@ -739,6 +745,7 @@ const App = () => {
         <select 
           style={styles.select}
           value={currentLottery}
+          aria-label="Selecione a loteria"
           onChange={(e) => setCurrentLottery(e.target.value)}
         >
           {Object.entries(LOTTERIES).map(([key, val]) => (
