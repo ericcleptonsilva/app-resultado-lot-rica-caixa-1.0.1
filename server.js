@@ -65,6 +65,6 @@ const server = http.createServer(async (req, res) => {
 });
 
 const PORT = 3001;
-server.listen(PORT, () => {
+server.listen(PORT, '127.0.0.1', () => {
   console.log(`Servidor de backend rodando na porta ${PORT}`);
 });
