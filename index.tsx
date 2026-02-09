@@ -1,17 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
-// --- Configurações ---
+import { LotteryConfig, generateRandomNumbers } from "./lotteryUtils";
 
-interface LotteryConfig {
-  name: string;
-  color: string;
-  balls: number;
-  draw: number;
-  betLength: number;
-  awards: number[];
-  startZero?: boolean;
-  textColor?: string;
-}
+// --- Configurações ---
 
 const LOTTERIES: Record<string, LotteryConfig> = {
   megasena: { name: "Mega-Sena", color: "#209869", balls: 60, draw: 6, betLength: 6, awards: [4, 5, 6] },
@@ -491,25 +482,8 @@ const App = () => {
   };
 
   const handleRandomize = () => {
-    // Gerar números aleatórios para preencher o que falta
-    const needed = config.betLength - selectedNumbers.length;
-    if (needed <= 0) return;
-
-    const available = [];
-    // Gerar range disponível
-    const start = config.startZero ? 0 : 1;
-    const end = config.startZero ? 99 : config.balls;
-
-    for (let i = start; i <= end; i++) {
-      const numStr = i.toString().padStart(2, '0');
-      if (!selectedNumbers.includes(numStr)) {
-        available.push(numStr);
-      }
-    }
-
-    // Embaralhar e pegar os necessários
-    const shuffled = available.sort(() => 0.5 - Math.random());
-    const randomPick = shuffled.slice(0, needed);
+    const randomPick = generateRandomNumbers(config, selectedNumbers);
+    if (randomPick.length === 0) return;
     
     setSelectedNumbers(prev => [...prev, ...randomPick].sort((a, b) => parseInt(a) - parseInt(b)));
   };
