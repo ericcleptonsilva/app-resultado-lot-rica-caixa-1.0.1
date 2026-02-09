@@ -13,6 +13,8 @@ interface LotteryConfig {
   textColor?: string;
 }
 
+const CAIXA_API_BASE_URL = "https://servicebus2.caixa.gov.br/portaldeloterias/api";
+
 const LOTTERIES: Record<string, LotteryConfig> = {
   megasena: { name: "Mega-Sena", color: "#209869", balls: 60, draw: 6, betLength: 6, awards: [4, 5, 6] },
   lotofacil: { name: "Lotofácil", color: "#930089", balls: 25, draw: 15, betLength: 15, awards: [11, 12, 13, 14, 15] },
@@ -382,7 +384,7 @@ const App = () => {
     setLoading(true);
     try {
       // URL oficial da Caixa
-      const response = await fetch(`https://servicebus2.caixa.gov.br/portaldeloterias/api/${lottery}`);
+      const response = await fetch(`${CAIXA_API_BASE_URL}/${lottery}`);
       if (!response.ok) throw new Error("Falha na API da Caixa");
       const data = await response.json();
       resultsCache.current[lottery] = data;
@@ -412,7 +414,7 @@ const App = () => {
       if (contestNumber <= 0) break;
       // Endpoint para concursos específicos na API oficial
       promises.push(
-        fetch(`https://servicebus2.caixa.gov.br/portaldeloterias/api/${currentLottery}/${contestNumber}`)
+        fetch(`${CAIXA_API_BASE_URL}/${currentLottery}/${contestNumber}`)
           .then(res => res.ok ? res.json() : null)
           .catch(() => null)
       );
