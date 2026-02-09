@@ -21,11 +21,47 @@ const server = http.createServer(async (req, res) => {
     req.on('data', chunk => { body += chunk; });
     req.on('end', async () => {
       try {
-        if (!apiKey) {
-          throw new Error("Chave de API não configurada no servidor.");
+        let params;
+        try {
+          params = JSON.parse(body);
+        } catch (e) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: "JSON inválido." }));
+          return;
         }
 
-        const { name, betLength, balls } = JSON.parse(body);
+        const { name, betLength, balls } = params;
+
+        // Validação de entrada
+        if (typeof name !== 'string' || name.length === 0 || name.length > 50) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: "Parâmetro 'name' inválido. Deve ser uma string de 1 a 50 caracteres." }));
+          return;
+        }
+
+        if (!Number.isInteger(betLength) || betLength < 1 || betLength > 50) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: "Parâmetro 'betLength' inválido. Deve ser um número inteiro entre 1 e 50." }));
+          return;
+        }
+
+        if (!Number.isInteger(balls) || balls < 1 || balls > 100) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: "Parâmetro 'balls' inválido. Deve ser um número inteiro entre 1 e 100." }));
+          return;
+        }
+
+        if (betLength > balls) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: "O número de dezenas (betLength) não pode ser maior que o total de bolas (balls)." }));
+          return;
+        }
+
+        if (!apiKey) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: "Chave de API não configurada no servidor." }));
+          return;
+        }
 
         // Inicializa a IA no servidor, mantendo a chave protegida
         const ai = new GoogleGenAI({ apiKey });
