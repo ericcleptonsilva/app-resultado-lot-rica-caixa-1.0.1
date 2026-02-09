@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
+import { checkHits, isWinningGame } from "./lotteryUtils";
 // --- Configurações ---
 
 interface LotteryConfig {
@@ -539,17 +540,6 @@ const App = () => {
     setMyGames(prev => prev.filter(g => g.id !== id));
   };
 
-  const checkHits = (gameNumbers: string[]) => {
-    if (!result || !result.listaDezenas) return 0;
-    const hits = gameNumbers.filter(n => result.listaDezenas.includes(n));
-    return hits.length;
-  };
-
-  const isWinningGame = (hits: number) => {
-    if (!config.awards) return false;
-    return config.awards.includes(hits);
-  };
-
   // --- Renderização ---
 
   const renderBall = (num: string, userGameNumbers: string[] | null = null, size: string = "40px") => {
@@ -577,8 +567,8 @@ const App = () => {
     const winDistribution: Record<number, number> = {};
 
     myGames.forEach(g => {
-      const hits = checkHits(g.numbers);
-      if (isWinningGame(hits)) {
+      const hits = checkHits(g.numbers, result?.listaDezenas);
+      if (isWinningGame(hits, config.awards)) {
         totalWins++;
         winDistribution[hits] = (winDistribution[hits] || 0) + 1;
       }
@@ -675,8 +665,8 @@ const App = () => {
         )}
 
         {myGames.slice().reverse().map(game => { // Reverse para mostrar os mais novos primeiro
-          const hits = checkHits(game.numbers);
-          const isWinner = isWinningGame(hits);
+          const hits = checkHits(game.numbers, result?.listaDezenas);
+          const isWinner = isWinningGame(hits, config.awards);
           
           return (
             <div key={game.id} style={isWinner ? styles.winnerCard(themeColor) : styles.card}>
