@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
+import { toggleLotteryNumber } from "./lotteryLogic";
+
 // --- Configurações ---
 
 interface LotteryConfig {
@@ -478,16 +480,9 @@ const App = () => {
   // --- Lógica do Quadro de Números ---
 
   const handleToggleNumber = (num: string) => {
-    setSelectedNumbers(prev => {
-      if (prev.includes(num)) {
-        return prev.filter(n => n !== num);
-      } else {
-        if (prev.length >= config.betLength) {
-          return prev; // Máximo atingido
-        }
-        return [...prev, num].sort((a, b) => parseInt(a) - parseInt(b));
-      }
-    });
+    setSelectedNumbers((prev) =>
+      toggleLotteryNumber(prev, num, config.betLength)
+    );
   };
 
   const handleRandomize = () => {
