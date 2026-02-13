@@ -38,6 +38,9 @@ test('checkHits - calculates correct number of hits', (t) => {
   // Case 11: Non-array inputs (Robustness check)
   assert.strictEqual(checkHits('not-array', ['01']), 0, 'String game input should yield 0 hits');
   assert.strictEqual(checkHits(['01'], 'not-array'), 0, 'String winning input should yield 0 hits');
+  assert.strictEqual(checkHits(123, ['01']), 0, 'Number game input should yield 0 hits');
+  assert.strictEqual(checkHits(['01'], 123), 0, 'Number winning input should yield 0 hits');
+  assert.strictEqual(checkHits({}, ['01']), 0, 'Object game input should yield 0 hits');
 
   // Case 12: Duplicate numbers in input (Documenting behavior: duplicates are counted)
   // If game is ['01', '01'] and winning is ['01'], current implementation yields 2 hits.
@@ -48,6 +51,29 @@ test('checkHits - calculates correct number of hits', (t) => {
   // Input numbers as strings vs winning numbers as numbers. Strict equality fails.
   // This is expected behavior in JS/TS without coercion.
   assert.strictEqual(checkHits(['1', '2'], [1, 2]), 0, 'String vs Number mismatch results in 0 hits');
+
+  // Case 14: Polymorphism (Number vs Number)
+  // Verify that the function works correctly if inputs are numbers (not just strings).
+  assert.strictEqual(checkHits([1, 2, 3], [1, 3, 5]), 2, 'Number vs Number match should work correctly');
+
+  // Case 15: Mixed types in input arrays
+  // Verify behavior with mixed types.
+  assert.strictEqual(checkHits(['1', 2, '3'], [1, '2', '3']), 1, 'Mixed types: "3" matches "3". 2 (number) does not match "2" (string).');
+});
+
+test('checkHits - Performance / Large Arrays', (t) => {
+  // Simulating Lotomania extreme case (50 bets vs 20 draws) repeated many times
+  const gameNumbers = Array.from({ length: 50 }, (_, i) => i.toString());
+  const winningNumbers = Array.from({ length: 20 }, (_, i) => (i * 2).toString()); // evens match
+
+  const start = performance.now();
+  for (let i = 0; i < 10000; i++) {
+    checkHits(gameNumbers, winningNumbers);
+  }
+  const end = performance.now();
+
+  // Just ensure it doesn't crash or take absurdly long (e.g. > 1s for 10k checks is fine, usually < 50ms)
+  assert.ok((end - start) < 1000, 'Performance check: 10k iterations took less than 1s');
 });
 
 test('isWinningGame - verifies winning condition based on awards', (t) => {
@@ -82,4 +108,46 @@ test('isWinningGame - verifies winning condition based on awards', (t) => {
   scenarios.forEach(({ hits, awards, expected, desc }) => {
     assert.strictEqual(isWinningGame(hits, awards), expected, desc);
   });
+});
+
+test('Real-world Lottery Configurations', (t) => {
+  // Configurations mirrored from index.tsx
+  const configs = {
+    megasena: { awards: [4, 5, 6] },
+    lotofacil: { awards: [11, 12, 13, 14, 15] },
+    quina: { awards: [2, 3, 4, 5] },
+    lotomania: { awards: [15, 16, 17, 18, 19, 20, 0] },
+    timemania: { awards: [3, 4, 5, 6, 7] },
+    diadesorte: { awards: [4, 5, 6, 7] },
+  };
+
+  // Verify key scenarios for each
+  // Mega-Sena
+  assert.strictEqual(isWinningGame(6, configs.megasena.awards), true, 'Mega-Sena: 6 hits wins');
+  assert.strictEqual(isWinningGame(3, configs.megasena.awards), false, 'Mega-Sena: 3 hits loses');
+
+  // Lotofácil
+  assert.strictEqual(isWinningGame(15, configs.lotofacil.awards), true, 'Lotofácil: 15 hits wins');
+  assert.strictEqual(isWinningGame(11, configs.lotofacil.awards), true, 'Lotofácil: 11 hits wins');
+  assert.strictEqual(isWinningGame(10, configs.lotofacil.awards), false, 'Lotofácil: 10 hits loses');
+
+  // Quina
+  assert.strictEqual(isWinningGame(5, configs.quina.awards), true, 'Quina: 5 hits wins');
+  assert.strictEqual(isWinningGame(2, configs.quina.awards), true, 'Quina: 2 hits wins');
+  assert.strictEqual(isWinningGame(1, configs.quina.awards), false, 'Quina: 1 hits loses');
+
+  // Lotomania
+  assert.strictEqual(isWinningGame(20, configs.lotomania.awards), true, 'Lotomania: 20 hits wins');
+  assert.strictEqual(isWinningGame(0, configs.lotomania.awards), true, 'Lotomania: 0 hits wins');
+  assert.strictEqual(isWinningGame(14, configs.lotomania.awards), false, 'Lotomania: 14 hits loses');
+
+  // Timemania
+  assert.strictEqual(isWinningGame(7, configs.timemania.awards), true, 'Timemania: 7 hits wins');
+  assert.strictEqual(isWinningGame(3, configs.timemania.awards), true, 'Timemania: 3 hits wins');
+  assert.strictEqual(isWinningGame(2, configs.timemania.awards), false, 'Timemania: 2 hits loses');
+
+  // Dia de Sorte
+  assert.strictEqual(isWinningGame(7, configs.diadesorte.awards), true, 'Dia de Sorte: 7 hits wins');
+  assert.strictEqual(isWinningGame(4, configs.diadesorte.awards), true, 'Dia de Sorte: 4 hits wins');
+  assert.strictEqual(isWinningGame(3, configs.diadesorte.awards), false, 'Dia de Sorte: 3 hits loses');
 });
