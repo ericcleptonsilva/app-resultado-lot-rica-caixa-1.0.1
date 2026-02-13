@@ -334,9 +334,11 @@ const AdBanner = ({ fixed = false }: { fixed?: boolean }) => {
 
 const App = () => {
   const [currentLottery, setCurrentLottery] = useState("megasena");
+  const [deletingGameId, setDeletingGameId] = useState<number | null>(null);
   const [result, setResult] = useState<LotteryResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("results"); // 'results', 'games', 'stats'
+  const [deletingGameId, setDeletingGameId] = useState<number | null>(null);
   
   // Meus Jogos
   const [myGames, setMyGames] = useState<Game[]>([]);
