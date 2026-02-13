@@ -1,10 +1,11 @@
 import http from 'http';
 import { GoogleGenAI } from "@google/genai";
+import { fileURLToPath } from 'url';
 
-// O servidor utiliza a chave de API das variáveis de ambiente
-const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+export const server = http.createServer(async (req, res) => {
+  // O servidor utiliza a chave de API das variáveis de ambiente
+  const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
 
-const server = http.createServer(async (req, res) => {
   // Configuração básica de CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -101,6 +102,8 @@ const server = http.createServer(async (req, res) => {
 });
 
 const PORT = 3001;
-server.listen(PORT, () => {
-  console.log(`Servidor de backend rodando na porta ${PORT}`);
-});
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  server.listen(PORT, () => {
+    console.log(`Servidor de backend rodando na porta ${PORT}`);
+  });
+}
