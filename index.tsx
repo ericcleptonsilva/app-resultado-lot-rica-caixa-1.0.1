@@ -334,6 +334,7 @@ const AdBanner = ({ fixed = false }: { fixed?: boolean }) => {
 
 const App = () => {
   const [currentLottery, setCurrentLottery] = useState("megasena");
+  const [deletingGameId, setDeletingGameId] = useState<number | null>(null);
   const [result, setResult] = useState<LotteryResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("results"); // 'results', 'games', 'stats'
@@ -724,39 +725,22 @@ const App = () => {
               
               <div style={{textAlign: "right", marginTop: "10px"}}>
                 {deletingGameId === game.id ? (
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "8px" }}>
-                    <span style={{ fontSize: "12px", color: "#555" }}>Tem certeza?</span>
+                  <div style={{display: "flex", alignItems: "center", gap: "8px", justifyContent: "flex-end"}}>
+                    <span style={{fontSize: "12px", color: "#666"}}>Confirmar?</span>
                     <button
                       onClick={() => {
                         handleDeleteGame(game.id);
                         setDeletingGameId(null);
                       }}
-                      style={{
-                        backgroundColor: "#ff4444",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "4px",
-                        padding: "4px 8px",
-                        cursor: "pointer",
-                        fontSize: "12px",
-                        fontWeight: "bold"
-                      }}
                       aria-label="Confirmar exclusão"
+                      style={{background: "#ff4444", border: "none", borderRadius: "4px", color: "white", cursor: "pointer", fontSize: "12px", padding: "4px 8px"}}
                     >
                       Sim
                     </button>
                     <button
                       onClick={() => setDeletingGameId(null)}
-                      style={{
-                        backgroundColor: "transparent",
-                        color: "#666",
-                        border: "1px solid #ccc",
-                        borderRadius: "4px",
-                        padding: "4px 8px",
-                        cursor: "pointer",
-                        fontSize: "12px"
-                      }}
                       aria-label="Cancelar exclusão"
+                      style={{background: "#e0e0e0", border: "none", borderRadius: "4px", color: "#333", cursor: "pointer", fontSize: "12px", padding: "4px 8px"}}
                     >
                       Não
                     </button>
@@ -765,7 +749,7 @@ const App = () => {
                   <button
                     onClick={() => setDeletingGameId(game.id)}
                     aria-label={`Remover jogo ${game.id}`}
-                    style={{background: "none", border: "none", color: "#ff4444", cursor: "pointer", fontSize: "12px", textDecoration: "underline"}}
+                    style={{background: "none", border: "none", color: "#ff4444", cursor: "pointer", fontSize: "12px"}}
                   >
                     Remover
                   </button>
