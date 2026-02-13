@@ -5,3 +5,7 @@
 ## 2026-10-25 - Inline Destructive Actions
 **Learning:** Using browser alerts for confirmation feels jarring and outdated. Inline confirmation (swapping the button) keeps context and flow.
 **Action:** For list items, use a local state (e.g., `deletingId`) to render confirmation buttons in place of the action button, maintaining spatial context.
+
+## 2026-10-25 - Strategic Complexity vs Simplicity
+**Learning:** Users want "advanced" features like Gail Howard's strategies but don't want to configure complex parameters.
+**Action:** Encapsulate complex logic (Sum ranges, Even/Odd ratios) into a simple "Smart Pick" button that "just works", providing immediate value without friction.

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
-import { checkHits, isWinningGame } from "./lotteryUtils";
+import { checkHits, isWinningGame, generateSmartPick } from "./lotteryUtils";
 // --- Configurações ---
 
 interface LotteryConfig {
@@ -537,6 +537,13 @@ const App = () => {
     setSelectedNumbers(prev => [...prev, ...randomPick].sort((a, b) => parseInt(a) - parseInt(b)));
   };
 
+  const handleSmartPick = () => {
+    // Gerar números usando a lógica inteligente (Gail Howard)
+    // Nota: Para Lotomania, a lógica pode cair no fallback aleatório devido à alta densidade
+    const smartNumbers = generateSmartPick(config.balls, config.betLength);
+    setSelectedNumbers(smartNumbers);
+  };
+
   const handleClearSelection = () => {
     setSelectedNumbers([]);
   };
@@ -659,6 +666,14 @@ const App = () => {
                disabled={selectedNumbers.length >= config.betLength}
              >
                <span className="material-icons" style={{fontSize: "18px"}}>auto_fix_high</span> Surpresinha
+             </button>
+             <button
+               style={{...styles.button("#9b59b6", selectedNumbers.length >= config.betLength), color: "white"}}
+               onClick={handleSmartPick}
+               disabled={selectedNumbers.length >= config.betLength}
+               title="Estratégia baseada em Gail Howard (Soma, Pares/Ímpares)"
+             >
+               <span className="material-icons" style={{fontSize: "18px"}}>psychology</span> Estratégia
              </button>
              <button 
                style={styles.button(themeColor, selectedNumbers.length !== config.betLength)}
