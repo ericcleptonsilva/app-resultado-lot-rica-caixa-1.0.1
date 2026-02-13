@@ -334,7 +334,6 @@ const AdBanner = ({ fixed = false }: { fixed?: boolean }) => {
 
 const App = () => {
   const [currentLottery, setCurrentLottery] = useState("megasena");
-  const [deletingGameId, setDeletingGameId] = useState<number | null>(null);
   const [result, setResult] = useState<LotteryResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("results"); // 'results', 'games', 'stats'
@@ -353,9 +352,6 @@ const App = () => {
   // IA
   const [aiLoading, setAiLoading] = useState(false);
   const [aiPrediction, setAiPrediction] = useState<{numbers: string[], message: string} | null>(null);
-
-  // Confirmação de exclusão
-  const [deletingGameId, setDeletingGameId] = useState<number | null>(null);
 
   const resultsCache = useRef<Record<string, LotteryResult>>({});
   const statsCache = useRef<Record<string, Stat[]>>({});
@@ -806,8 +802,12 @@ const App = () => {
       </div>
 
       {/* Tabs */}
-      <div style={styles.tabBar}>
+      <div style={styles.tabBar} role="tablist" aria-label="Seções do aplicativo">
         <button 
+          id="tab-results"
+          role="tab"
+          aria-selected={activeTab === 'results'}
+          aria-controls="tabpanel-content"
           style={styles.tab(activeTab === 'results', themeColor)} 
           onClick={() => setActiveTab('results')}
         >
@@ -815,6 +815,10 @@ const App = () => {
           Resultado
         </button>
         <button 
+          id="tab-games"
+          role="tab"
+          aria-selected={activeTab === 'games'}
+          aria-controls="tabpanel-content"
           style={styles.tab(activeTab === 'games', themeColor)} 
           onClick={() => setActiveTab('games')}
         >
@@ -822,6 +826,10 @@ const App = () => {
           Meus Jogos
         </button>
         <button 
+          id="tab-stats"
+          role="tab"
+          aria-selected={activeTab === 'stats'}
+          aria-controls="tabpanel-content"
           style={styles.tab(activeTab === 'stats', themeColor)} 
           onClick={() => {
             setActiveTab('stats');
@@ -834,7 +842,12 @@ const App = () => {
       </div>
 
       {/* Content */}
-      <div style={styles.content}>
+      <div
+        style={styles.content}
+        role="tabpanel"
+        id="tabpanel-content"
+        aria-labelledby={`tab-${activeTab}`}
+      >
         
         {loading && (
           <div style={{textAlign: "center", padding: "40px"}}>
