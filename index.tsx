@@ -337,6 +337,7 @@ const App = () => {
   const [result, setResult] = useState<LotteryResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("results"); // 'results', 'games', 'stats'
+  const [deletingGameId, setDeletingGameId] = useState<number | null>(null);
   
   // Meus Jogos
   const [myGames, setMyGames] = useState<Game[]>([]);
@@ -722,13 +723,53 @@ const App = () => {
               </div>
               
               <div style={{textAlign: "right", marginTop: "10px"}}>
-                <button 
-                  onClick={() => handleDeleteGame(game.id)}
-                  aria-label={`Remover jogo ${game.id}`}
-                  style={{background: "none", border: "none", color: "#ff4444", cursor: "pointer", fontSize: "12px"}}
-                >
-                  Remover
-                </button>
+                {deletingGameId === game.id ? (
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "8px" }}>
+                    <span style={{ fontSize: "12px", color: "#555" }}>Tem certeza?</span>
+                    <button
+                      onClick={() => {
+                        handleDeleteGame(game.id);
+                        setDeletingGameId(null);
+                      }}
+                      style={{
+                        backgroundColor: "#ff4444",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "4px",
+                        padding: "4px 8px",
+                        cursor: "pointer",
+                        fontSize: "12px",
+                        fontWeight: "bold"
+                      }}
+                      aria-label="Confirmar exclusão"
+                    >
+                      Sim
+                    </button>
+                    <button
+                      onClick={() => setDeletingGameId(null)}
+                      style={{
+                        backgroundColor: "transparent",
+                        color: "#666",
+                        border: "1px solid #ccc",
+                        borderRadius: "4px",
+                        padding: "4px 8px",
+                        cursor: "pointer",
+                        fontSize: "12px"
+                      }}
+                      aria-label="Cancelar exclusão"
+                    >
+                      Não
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setDeletingGameId(game.id)}
+                    aria-label={`Remover jogo ${game.id}`}
+                    style={{background: "none", border: "none", color: "#ff4444", cursor: "pointer", fontSize: "12px", textDecoration: "underline"}}
+                  >
+                    Remover
+                  </button>
+                )}
               </div>
             </div>
           );
