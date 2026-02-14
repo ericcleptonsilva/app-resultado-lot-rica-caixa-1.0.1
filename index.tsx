@@ -338,7 +338,6 @@ const App = () => {
   const [result, setResult] = useState<LotteryResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("results"); // 'results', 'games', 'stats'
-  const [deletingGameId, setDeletingGameId] = useState<number | null>(null);
   
   // Meus Jogos
   const [myGames, setMyGames] = useState<Game[]>([]);
@@ -355,7 +354,6 @@ const App = () => {
   const [aiPrediction, setAiPrediction] = useState<{numbers: string[], message: string} | null>(null);
 
   // Confirmação de exclusão
-  const [deletingGameId, setDeletingGameId] = useState<number | null>(null);
 
   const resultsCache = useRef<Record<string, LotteryResult>>({});
   const statsCache = useRef<Record<string, Stat[]>>({});
@@ -806,8 +804,16 @@ const App = () => {
       </div>
 
       {/* Tabs */}
-      <div style={styles.tabBar}>
+      <div
+        style={styles.tabBar}
+        role="tablist"
+        aria-label="Seções do aplicativo"
+      >
         <button 
+          role="tab"
+          id="tab-results"
+          aria-selected={activeTab === 'results'}
+          aria-controls="panel-results"
           style={styles.tab(activeTab === 'results', themeColor)} 
           onClick={() => setActiveTab('results')}
         >
@@ -815,6 +821,10 @@ const App = () => {
           Resultado
         </button>
         <button 
+          role="tab"
+          id="tab-games"
+          aria-selected={activeTab === 'games'}
+          aria-controls="panel-games"
           style={styles.tab(activeTab === 'games', themeColor)} 
           onClick={() => setActiveTab('games')}
         >
@@ -822,6 +832,10 @@ const App = () => {
           Meus Jogos
         </button>
         <button 
+          role="tab"
+          id="tab-stats"
+          aria-selected={activeTab === 'stats'}
+          aria-controls="panel-stats"
           style={styles.tab(activeTab === 'stats', themeColor)} 
           onClick={() => {
             setActiveTab('stats');
@@ -844,7 +858,7 @@ const App = () => {
         )}
 
         {!loading && result && activeTab === 'results' && (
-          <>
+          <div role="tabpanel" id="panel-results" aria-labelledby="tab-results">
             <div style={styles.card}>
               <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px"}}>
                 <span style={{fontWeight: "bold", fontSize: "18px"}}>CONCURSO {result.numero}</span>
@@ -915,13 +929,17 @@ const App = () => {
                 </div>
               )}
             </div>
-          </>
+          </div>
         )}
 
-        {!loading && activeTab === 'games' && renderGamesTab()}
+        {!loading && activeTab === 'games' && (
+          <div role="tabpanel" id="panel-games" aria-labelledby="tab-games">
+            {renderGamesTab()}
+          </div>
+        )}
 
         {!loading && activeTab === 'stats' && (
-          <div>
+          <div role="tabpanel" id="panel-stats" aria-labelledby="tab-stats">
             <div style={styles.card}>
               <h3 style={{marginTop: 0, color: themeColor}}>Números Quentes 🔥</h3>
               <p style={{fontSize: "14px", color: "#666"}}>Baseado nos últimos 10 concursos.</p>
