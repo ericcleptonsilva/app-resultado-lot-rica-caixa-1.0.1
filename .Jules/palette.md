@@ -9,3 +9,7 @@
 ## 2026-10-25 - Strategic Complexity vs Simplicity
 **Learning:** Users want "advanced" features like Gail Howard's strategies but don't want to configure complex parameters.
 **Action:** Encapsulate complex logic (Sum ranges, Even/Odd ratios) into a simple "Smart Pick" button that "just works", providing immediate value without friction.
+
+## 2026-10-25 - Accessible Tabs Navigation
+**Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
+**Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
