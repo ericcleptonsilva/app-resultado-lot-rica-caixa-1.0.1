@@ -913,15 +913,34 @@ const App = () => {
                       </div>
                     ))}
                   </div>
-                  <button 
-                    style={{
-                      background: "transparent", border: "1px solid white", color: "white",
-                      marginTop: "15px", padding: "5px 15px", borderRadius: "15px", cursor: "pointer"
-                    }}
-                    onClick={() => setAiPrediction(null)}
-                  >
-                    Gerar Outro
-                  </button>
+                  <div style={{display: "flex", justifyContent: "center", gap: "10px", marginTop: "15px"}}>
+                     <button
+                       onClick={() => {
+                         setSelectedNumbers([...aiPrediction.numbers].sort((a, b) => parseInt(a) - parseInt(b)));
+                         setActiveTab('games');
+                         window.scrollTo({ top: 0, behavior: 'smooth' });
+                       }}
+                       aria-label="Usar estes números para jogar"
+                       style={{
+                         backgroundColor: "white", color: "#d97b4f", border: "none",
+                         padding: "8px 16px", borderRadius: "20px", cursor: "pointer",
+                         fontWeight: "bold", fontSize: "14px", display: "flex", alignItems: "center", gap: "5px"
+                       }}
+                     >
+                       <span className="material-icons" style={{fontSize: "16px"}}>play_circle_filled</span>
+                       Jogar Agora
+                     </button>
+                     <button
+                       style={{
+                         background: "transparent", border: "1px solid white", color: "white",
+                         padding: "8px 16px", borderRadius: "20px", cursor: "pointer",
+                         fontSize: "14px"
+                       }}
+                       onClick={() => setAiPrediction(null)}
+                     >
+                       Gerar Outro
+                     </button>
+                  </div>
                 </div>
               )}
             </div>

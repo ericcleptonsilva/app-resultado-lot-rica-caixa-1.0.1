@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Bridge Delight to Utility
+**Learning:** Users enjoy "magical" features like AI predictions, but frustration arises when they can't easily act on the generated data.
+**Action:** Always provide a direct action button (e.g., "Use Prediction") next to generated content that bridges the gap to the core utility (e.g., populating a form or selection).
