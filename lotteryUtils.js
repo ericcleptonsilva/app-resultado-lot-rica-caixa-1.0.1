@@ -24,6 +24,12 @@ export const isWinningGame = (hits, awards) => {
   return awards.includes(hits);
 };
 
+// --- Constants for Smart Pick Logic ---
+const SMART_PICK_MAX_ATTEMPTS = 1000;
+const SUM_RANGE_TOLERANCE = 0.15; // 15% tolerance on min/max sum range (middle 70%)
+const EVEN_ODD_RATIO_MIN = 0.3; // 30% even numbers minimum
+const EVEN_ODD_RATIO_MAX = 0.7; // 70% even numbers maximum
+
 /**
  * Generates a "smart" pick based on statistical rules (Gail Howard):
  * 1. Sum in the middle 70% range.
@@ -35,7 +41,6 @@ export const isWinningGame = (hits, awards) => {
  * @returns {string[]} An array of sorted strings representing the numbers.
  */
 export const generateSmartPick = (totalBalls, betLength) => {
-  const maxAttempts = 1000;
   let attempts = 0;
 
   // Calculate sum range (middle 70%)
@@ -44,10 +49,10 @@ export const generateSmartPick = (totalBalls, betLength) => {
   // Max possible sum: (n) + (n-1) + ... + (n-k+1)
   const maxSum = (betLength * (2 * totalBalls - betLength + 1)) / 2;
   const range = maxSum - minSum;
-  const lowerBound = minSum + range * 0.15;
-  const upperBound = maxSum - range * 0.15;
+  const lowerBound = minSum + range * SUM_RANGE_TOLERANCE;
+  const upperBound = maxSum - range * SUM_RANGE_TOLERANCE;
 
-  while (attempts < maxAttempts) {
+  while (attempts < SMART_PICK_MAX_ATTEMPTS) {
     attempts++;
     const pick = [];
     const available = Array.from({ length: totalBalls }, (_, i) => i + 1);
@@ -68,7 +73,7 @@ export const generateSmartPick = (totalBalls, betLength) => {
     // Allows 2, 3, 4 evens for 6 numbers (0.33, 0.5, 0.66)
     const evens = pick.filter(n => n % 2 === 0).length;
     const evenRatio = evens / betLength;
-    if (evenRatio < 0.3 || evenRatio > 0.7) continue;
+    if (evenRatio < EVEN_ODD_RATIO_MIN || evenRatio > EVEN_ODD_RATIO_MAX) continue;
 
     // 3. Check Sequences (avoid 3 consecutive)
     let hasSequence = false;
