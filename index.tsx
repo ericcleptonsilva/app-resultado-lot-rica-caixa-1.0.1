@@ -496,6 +496,14 @@ const App = () => {
     }
   };
 
+  const handlePlayAiPrediction = () => {
+    if (aiPrediction) {
+      setSelectedNumbers(aiPrediction.numbers.sort((a, b) => parseInt(a) - parseInt(b)));
+      setActiveTab('games');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   // --- Lógica do Quadro de Números ---
 
   const handleToggleNumber = (num: string) => {
@@ -921,6 +929,25 @@ const App = () => {
                     onClick={() => setAiPrediction(null)}
                   >
                     Gerar Outro
+                  </button>
+                  <button
+                    style={{
+                      backgroundColor: "white",
+                      color: "#d97b4f",
+                      border: "none",
+                      marginTop: "15px",
+                      marginLeft: "10px",
+                      padding: "8px 20px",
+                      borderRadius: "20px",
+                      fontWeight: "bold",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
+                    }}
+                    onClick={handlePlayAiPrediction}
+                    title="Usar estes números no jogo"
+                  >
+                    Jogar Agora 🎲
                   </button>
                 </div>
               )}
