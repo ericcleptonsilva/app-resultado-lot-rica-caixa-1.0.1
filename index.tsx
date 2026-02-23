@@ -913,15 +913,35 @@ const App = () => {
                       </div>
                     ))}
                   </div>
-                  <button 
-                    style={{
-                      background: "transparent", border: "1px solid white", color: "white",
-                      marginTop: "15px", padding: "5px 15px", borderRadius: "15px", cursor: "pointer"
-                    }}
-                    onClick={() => setAiPrediction(null)}
-                  >
-                    Gerar Outro
-                  </button>
+                  <div style={{display: "flex", gap: "10px", justifyContent: "center", marginTop: "15px"}}>
+                    <button
+                      style={{
+                        backgroundColor: "white", color: "#d97b4f", border: "none",
+                        padding: "8px 20px", borderRadius: "20px", cursor: "pointer",
+                        fontWeight: "bold", boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+                        fontSize: "14px", display: "flex", alignItems: "center", gap: "5px"
+                      }}
+                      onClick={() => {
+                        setSelectedNumbers([...aiPrediction.numbers].sort((a, b) => parseInt(a) - parseInt(b)));
+                        setActiveTab('games');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      aria-label="Usar estes números para jogar"
+                    >
+                      <span className="material-icons" style={{fontSize: "18px"}}>check_circle</span> Jogar Agora
+                    </button>
+                    <button
+                      style={{
+                        background: "transparent", border: "1px solid white", color: "white",
+                        padding: "8px 20px", borderRadius: "20px", cursor: "pointer",
+                        fontSize: "14px"
+                      }}
+                      onClick={() => setAiPrediction(null)}
+                      aria-label="Gerar novo palpite"
+                    >
+                      Gerar Outro
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
