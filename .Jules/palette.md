@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Actionable AI Results
+**Learning:** AI predictions are delightful but useless if users must manually copy them. A "Play Now" button bridges the gap between insight and action.
+**Action:** When presenting generated data (like lottery numbers), always provide a primary action to apply that data immediately to the core workflow.
