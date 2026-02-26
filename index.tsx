@@ -496,6 +496,13 @@ const App = () => {
     }
   };
 
+  const handlePlayAiPrediction = (numbers: string[]) => {
+    const sorted = [...numbers].sort((a, b) => parseInt(a) - parseInt(b));
+    setSelectedNumbers(sorted);
+    setActiveTab('games');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // --- Lógica do Quadro de Números ---
 
   const handleToggleNumber = (num: string) => {
@@ -913,15 +920,40 @@ const App = () => {
                       </div>
                     ))}
                   </div>
-                  <button 
-                    style={{
-                      background: "transparent", border: "1px solid white", color: "white",
-                      marginTop: "15px", padding: "5px 15px", borderRadius: "15px", cursor: "pointer"
-                    }}
-                    onClick={() => setAiPrediction(null)}
-                  >
-                    Gerar Outro
-                  </button>
+                  <div style={{display: "flex", justifyContent: "center", gap: "10px", marginTop: "15px"}}>
+                    <button
+                      style={{
+                        backgroundColor: "white",
+                        color: "#fda085",
+                        border: "none",
+                        padding: "8px 20px",
+                        borderRadius: "20px",
+                        fontWeight: "bold",
+                        cursor: "pointer",
+                        fontSize: "14px",
+                        boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
+                      }}
+                      onClick={() => handlePlayAiPrediction(aiPrediction.numbers)}
+                      aria-label="Jogar com estes números"
+                    >
+                      <span className="material-icons" style={{fontSize: "16px", verticalAlign: "middle", marginRight: "5px"}}>add_circle</span>
+                      Jogar Agora
+                    </button>
+                    <button
+                      style={{
+                        background: "transparent",
+                        border: "1px solid white",
+                        color: "white",
+                        padding: "8px 15px",
+                        borderRadius: "20px",
+                        cursor: "pointer",
+                        fontSize: "14px"
+                      }}
+                      onClick={() => setAiPrediction(null)}
+                    >
+                      Gerar Outro
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
