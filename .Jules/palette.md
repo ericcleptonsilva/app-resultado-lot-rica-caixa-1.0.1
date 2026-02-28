@@ -13,3 +13,11 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Disabled States with Explanations
+**Learning:** Hiding "disabled" visually but not semantically on buttons (like the "Salvar" button missing required numbers) causes frustration and relies on jarring browser alerts.
+**Action:** Always use the native `disabled` attribute along with a helpful `title` attribute to explain *why* an action is unavailable, maintaining a smooth flow instead of interrupting the user.
+
+## 2026-10-25 - Decorative Icons Accessibility
+**Learning:** Icons paired with text inside buttons (e.g., `<span className="material-icons">add</span> Salvar`) are read redundantly or poorly by screen readers.
+**Action:** Always add `aria-hidden="true"` to decorative icons (especially icon fonts like Material Icons) to ensure screen readers only announce the semantic text label.
