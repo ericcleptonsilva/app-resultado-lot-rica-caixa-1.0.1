@@ -663,7 +663,7 @@ const App = () => {
                onClick={handleRandomize}
                disabled={selectedNumbers.length >= config.betLength}
              >
-               <span className="material-icons" style={{fontSize: "18px"}}>auto_fix_high</span> Surpresinha
+               <span aria-hidden="true" className="material-icons" style={{fontSize: "18px"}}>auto_fix_high</span> Surpresinha
              </button>
              <button
                style={{...styles.button("#9b59b6", selectedNumbers.length >= config.betLength), color: "white"}}
@@ -671,13 +671,15 @@ const App = () => {
                disabled={selectedNumbers.length >= config.betLength}
                title="Estratégia baseada em Gail Howard (Soma, Pares/Ímpares)"
              >
-               <span className="material-icons" style={{fontSize: "18px"}}>psychology</span> Estratégia
+               <span aria-hidden="true" className="material-icons" style={{fontSize: "18px"}}>psychology</span> Estratégia
              </button>
              <button 
                style={styles.button(themeColor, selectedNumbers.length !== config.betLength)}
                onClick={handleAddGame}
+               disabled={selectedNumbers.length !== config.betLength}
+               title={selectedNumbers.length !== config.betLength ? `Selecione exatamente ${config.betLength} números` : "Salvar jogo"}
              >
-               <span className="material-icons" style={{fontSize: "18px"}}>add_circle</span> Salvar
+               <span aria-hidden="true" className="material-icons" style={{fontSize: "18px"}}>add_circle</span> Salvar
              </button>
           </div>
         </div>
@@ -813,7 +815,7 @@ const App = () => {
           style={styles.tab(activeTab === 'results', themeColor)} 
           onClick={() => setActiveTab('results')}
         >
-          <span className="material-icons" style={styles.icon}>casino</span>
+          <span aria-hidden="true" className="material-icons" style={styles.icon}>casino</span>
           Resultado
         </button>
         <button 
@@ -824,7 +826,7 @@ const App = () => {
           style={styles.tab(activeTab === 'games', themeColor)} 
           onClick={() => setActiveTab('games')}
         >
-          <span className="material-icons" style={styles.icon}>playlist_add_check</span>
+          <span aria-hidden="true" className="material-icons" style={styles.icon}>playlist_add_check</span>
           Meus Jogos
         </button>
         <button 
@@ -838,7 +840,7 @@ const App = () => {
             fetchHistoryForStats();
           }}
         >
-          <span className="material-icons" style={styles.icon}>bar_chart</span>
+          <span aria-hidden="true" className="material-icons" style={styles.icon}>bar_chart</span>
           Estatísticas
         </button>
       </div>
@@ -848,7 +850,7 @@ const App = () => {
         
         {loading && (
           <div style={{textAlign: "center", padding: "40px"}}>
-            <span className="material-icons" style={{fontSize: "40px", color: "#ccc", animation: "spin 1s linear infinite"}}>refresh</span>
+            <span aria-hidden="true" className="material-icons" style={{fontSize: "40px", color: "#ccc", animation: "spin 1s linear infinite"}}>refresh</span>
             <p>Buscando dados na Caixa...</p>
           </div>
         )}
@@ -942,7 +944,7 @@ const App = () => {
               
               {loadingStats ? (
                 <div style={{textAlign: "center", padding: "20px"}}>
-                  <span className="material-icons" style={{animation: "spin 1s infinite"}}>autorenew</span>
+                  <span aria-hidden="true" className="material-icons" style={{animation: "spin 1s infinite"}}>autorenew</span>
                   <p>Analisando histórico...</p>
                 </div>
               ) : stats.length > 0 ? (
