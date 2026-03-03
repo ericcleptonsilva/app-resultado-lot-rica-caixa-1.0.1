@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Bridging Delight to Utility
+**Learning:** Users often appreciate "delight" features (like AI predictions) but face friction if they have to manually apply those insights to core workflows (like creating a game).
+**Action:** Always bridge delight features directly to core utility workflows by providing immediate, context-aware action buttons (e.g., "Jogar Agora") that automatically populate forms and navigate the user.
