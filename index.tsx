@@ -161,9 +161,9 @@ const styles = {
     position: "relative" as const,
   }),
   button: (color: string, disabled = false, outline = false) => ({
-    backgroundColor: disabled ? "#ccc" : outline ? "transparent" : color,
-    color: disabled ? "white" : outline ? color : "white",
-    border: outline ? `2px solid ${color}` : "none",
+    backgroundColor: disabled ? (outline ? "transparent" : "#ccc") : (outline ? "transparent" : color),
+    color: disabled ? (outline ? "#ccc" : "white") : (outline ? color : "white"),
+    border: outline ? `2px solid ${disabled ? "#ccc" : color}` : "none",
     padding: "12px 20px",
     borderRadius: "12px",
     cursor: disabled ? "not-allowed" : "pointer",
@@ -548,7 +548,6 @@ const App = () => {
 
   const handleAddGame = () => {
     if (selectedNumbers.length !== config.betLength) {
-      alert(`Para ${config.name}, selecione exatamente ${config.betLength} números.`);
       return;
     }
 
@@ -652,32 +651,36 @@ const App = () => {
 
           <div style={{display: "flex", gap: "10px", marginTop: "15px"}}>
              <button 
-               style={styles.button(themeColor, false, true)}
+               style={styles.button(themeColor, selectedNumbers.length === 0, true)}
                onClick={handleClearSelection}
                disabled={selectedNumbers.length === 0}
+               title={selectedNumbers.length === 0 ? "Nenhum número selecionado para limpar" : "Limpar seleção"}
              >
                Limpar
              </button>
              <button 
-               style={{...styles.button("#f6d365", selectedNumbers.length >= config.betLength), color: "#333"}}
+               style={{...styles.button("#f6d365", selectedNumbers.length >= config.betLength), color: selectedNumbers.length >= config.betLength ? "white" : "#333"}}
                onClick={handleRandomize}
                disabled={selectedNumbers.length >= config.betLength}
+               title={selectedNumbers.length >= config.betLength ? "Limite de números atingido" : "Completar com números aleatórios"}
              >
-               <span className="material-icons" style={{fontSize: "18px"}}>auto_fix_high</span> Surpresinha
+               <span className="material-icons" aria-hidden="true" style={{fontSize: "18px"}}>auto_fix_high</span> Surpresinha
              </button>
              <button
                style={{...styles.button("#9b59b6", selectedNumbers.length >= config.betLength), color: "white"}}
                onClick={handleSmartPick}
                disabled={selectedNumbers.length >= config.betLength}
-               title="Estratégia baseada em Gail Howard (Soma, Pares/Ímpares)"
+               title={selectedNumbers.length >= config.betLength ? "Limite de números atingido" : "Estratégia baseada em Gail Howard (Soma, Pares/Ímpares)"}
              >
-               <span className="material-icons" style={{fontSize: "18px"}}>psychology</span> Estratégia
+               <span className="material-icons" aria-hidden="true" style={{fontSize: "18px"}}>psychology</span> Estratégia
              </button>
              <button 
                style={styles.button(themeColor, selectedNumbers.length !== config.betLength)}
                onClick={handleAddGame}
+               disabled={selectedNumbers.length !== config.betLength}
+               title={selectedNumbers.length !== config.betLength ? `Selecione exatamente ${config.betLength} números para salvar` : "Salvar jogo"}
              >
-               <span className="material-icons" style={{fontSize: "18px"}}>add_circle</span> Salvar
+               <span className="material-icons" aria-hidden="true" style={{fontSize: "18px"}}>add_circle</span> Salvar
              </button>
           </div>
         </div>
@@ -813,7 +816,7 @@ const App = () => {
           style={styles.tab(activeTab === 'results', themeColor)} 
           onClick={() => setActiveTab('results')}
         >
-          <span className="material-icons" style={styles.icon}>casino</span>
+          <span className="material-icons" aria-hidden="true" style={styles.icon}>casino</span>
           Resultado
         </button>
         <button 
@@ -824,7 +827,7 @@ const App = () => {
           style={styles.tab(activeTab === 'games', themeColor)} 
           onClick={() => setActiveTab('games')}
         >
-          <span className="material-icons" style={styles.icon}>playlist_add_check</span>
+          <span className="material-icons" aria-hidden="true" style={styles.icon}>playlist_add_check</span>
           Meus Jogos
         </button>
         <button 
@@ -838,7 +841,7 @@ const App = () => {
             fetchHistoryForStats();
           }}
         >
-          <span className="material-icons" style={styles.icon}>bar_chart</span>
+          <span className="material-icons" aria-hidden="true" style={styles.icon}>bar_chart</span>
           Estatísticas
         </button>
       </div>
@@ -847,8 +850,8 @@ const App = () => {
       <div style={styles.content}>
         
         {loading && (
-          <div style={{textAlign: "center", padding: "40px"}}>
-            <span className="material-icons" style={{fontSize: "40px", color: "#ccc", animation: "spin 1s linear infinite"}}>refresh</span>
+          <div style={{textAlign: "center", padding: "40px"}} aria-live="polite">
+            <span className="material-icons" aria-hidden="true" style={{fontSize: "40px", color: "#ccc", animation: "spin 1s linear infinite"}}>refresh</span>
             <p>Buscando dados na Caixa...</p>
           </div>
         )}
@@ -941,8 +944,8 @@ const App = () => {
               <p style={{fontSize: "14px", color: "#666"}}>Baseado nos últimos 10 concursos.</p>
               
               {loadingStats ? (
-                <div style={{textAlign: "center", padding: "20px"}}>
-                  <span className="material-icons" style={{animation: "spin 1s infinite"}}>autorenew</span>
+                <div style={{textAlign: "center", padding: "20px"}} aria-live="polite">
+                  <span className="material-icons" aria-hidden="true" style={{animation: "spin 1s infinite"}}>autorenew</span>
                   <p>Analisando histórico...</p>
                 </div>
               ) : stats.length > 0 ? (
