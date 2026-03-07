@@ -548,7 +548,6 @@ const App = () => {
 
   const handleAddGame = () => {
     if (selectedNumbers.length !== config.betLength) {
-      alert(`Para ${config.name}, selecione exatamente ${config.betLength} números.`);
       return;
     }
 
@@ -676,8 +675,10 @@ const App = () => {
              <button 
                style={styles.button(themeColor, selectedNumbers.length !== config.betLength)}
                onClick={handleAddGame}
+               disabled={selectedNumbers.length !== config.betLength}
+               title={selectedNumbers.length !== config.betLength ? `Selecione exatamente ${config.betLength} números` : undefined}
              >
-               <span className="material-icons" style={{fontSize: "18px"}}>add_circle</span> Salvar
+               <span className="material-icons" aria-hidden="true" style={{fontSize: "18px"}}>add_circle</span> Salvar
              </button>
           </div>
         </div>
@@ -813,7 +814,7 @@ const App = () => {
           style={styles.tab(activeTab === 'results', themeColor)} 
           onClick={() => setActiveTab('results')}
         >
-          <span className="material-icons" style={styles.icon}>casino</span>
+          <span className="material-icons" aria-hidden="true" style={styles.icon}>casino</span>
           Resultado
         </button>
         <button 
@@ -824,7 +825,7 @@ const App = () => {
           style={styles.tab(activeTab === 'games', themeColor)} 
           onClick={() => setActiveTab('games')}
         >
-          <span className="material-icons" style={styles.icon}>playlist_add_check</span>
+          <span className="material-icons" aria-hidden="true" style={styles.icon}>playlist_add_check</span>
           Meus Jogos
         </button>
         <button 
@@ -838,7 +839,7 @@ const App = () => {
             fetchHistoryForStats();
           }}
         >
-          <span className="material-icons" style={styles.icon}>bar_chart</span>
+          <span className="material-icons" aria-hidden="true" style={styles.icon}>bar_chart</span>
           Estatísticas
         </button>
       </div>
@@ -847,8 +848,8 @@ const App = () => {
       <div style={styles.content}>
         
         {loading && (
-          <div style={{textAlign: "center", padding: "40px"}}>
-            <span className="material-icons" style={{fontSize: "40px", color: "#ccc", animation: "spin 1s linear infinite"}}>refresh</span>
+          <div aria-live="polite" aria-busy="true" style={{textAlign: "center", padding: "40px"}}>
+            <span className="material-icons" aria-hidden="true" style={{fontSize: "40px", color: "#ccc", animation: "spin 1s linear infinite"}}>refresh</span>
             <p>Buscando dados na Caixa...</p>
           </div>
         )}
