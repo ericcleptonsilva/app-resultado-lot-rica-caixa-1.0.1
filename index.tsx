@@ -547,11 +547,6 @@ const App = () => {
   };
 
   const handleAddGame = () => {
-    if (selectedNumbers.length !== config.betLength) {
-      alert(`Para ${config.name}, selecione exatamente ${config.betLength} números.`);
-      return;
-    }
-
     const newGame: Game = { 
       id: Date.now(), 
       numbers: [...selectedNumbers],
@@ -676,6 +671,8 @@ const App = () => {
              <button 
                style={styles.button(themeColor, selectedNumbers.length !== config.betLength)}
                onClick={handleAddGame}
+               disabled={selectedNumbers.length !== config.betLength}
+               title={`Selecione exatamente ${config.betLength} números`}
              >
                <span className="material-icons" style={{fontSize: "18px"}}>add_circle</span> Salvar
              </button>
