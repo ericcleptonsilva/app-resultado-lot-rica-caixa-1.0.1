@@ -847,7 +847,7 @@ const App = () => {
       <div style={styles.content}>
         
         {loading && (
-          <div style={{textAlign: "center", padding: "40px"}}>
+          <div aria-live="polite" style={{textAlign: "center", padding: "40px"}}>
             <span className="material-icons" style={{fontSize: "40px", color: "#ccc", animation: "spin 1s linear infinite"}}>refresh</span>
             <p>Buscando dados na Caixa...</p>
           </div>
@@ -884,6 +884,7 @@ const App = () => {
               <h3 style={{margin: "0 0 10px 0"}}>Palpite Místico da IA ✨</h3>
               {!aiPrediction ? (
                 <button 
+                  aria-live="polite"
                   style={{
                     backgroundColor: "white", 
                     color: "#fda085", 
@@ -913,15 +914,40 @@ const App = () => {
                       </div>
                     ))}
                   </div>
-                  <button 
-                    style={{
-                      background: "transparent", border: "1px solid white", color: "white",
-                      marginTop: "15px", padding: "5px 15px", borderRadius: "15px", cursor: "pointer"
-                    }}
-                    onClick={() => setAiPrediction(null)}
-                  >
-                    Gerar Outro
-                  </button>
+                  <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginTop: "15px", flexWrap: "wrap" }}>
+                    <button
+                      aria-label="Jogar com estes números"
+                      style={{
+                        backgroundColor: "white",
+                        color: "#fda085",
+                        border: "none",
+                        padding: "8px 20px",
+                        borderRadius: "20px",
+                        fontWeight: "bold",
+                        cursor: "pointer",
+                        boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
+                      }}
+                      onClick={() => {
+                        if (aiPrediction) {
+                          const sorted = [...aiPrediction.numbers].sort((a, b) => parseInt(a) - parseInt(b));
+                          setSelectedNumbers(sorted);
+                          setActiveTab("games");
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }
+                      }}
+                    >
+                      Jogar Agora
+                    </button>
+                    <button
+                      style={{
+                        background: "transparent", border: "1px solid white", color: "white",
+                        padding: "8px 15px", borderRadius: "20px", cursor: "pointer"
+                      }}
+                      onClick={() => setAiPrediction(null)}
+                    >
+                      Gerar Outro
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -941,7 +967,7 @@ const App = () => {
               <p style={{fontSize: "14px", color: "#666"}}>Baseado nos últimos 10 concursos.</p>
               
               {loadingStats ? (
-                <div style={{textAlign: "center", padding: "20px"}}>
+                <div aria-live="polite" style={{textAlign: "center", padding: "20px"}}>
                   <span className="material-icons" style={{animation: "spin 1s infinite"}}>autorenew</span>
                   <p>Analisando histórico...</p>
                 </div>
