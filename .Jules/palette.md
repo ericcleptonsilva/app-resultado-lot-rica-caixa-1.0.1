@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Accessible Dynamic Content and Decorative Elements
+**Learning:** Screen readers announce visible elements sequentially and may miss dynamic content updates (like loading states or AI prediction results). They also redundantly announce decorative icons if not specifically instructed to ignore them.
+**Action:** Always add `aria-live="polite"` to containers that update asynchronously to ensure screen readers announce the changes smoothly, and always hide non-semantic, decorative icons (e.g., `<span className="material-icons">`) using `aria-hidden="true"`.
