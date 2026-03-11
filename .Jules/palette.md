@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Disabled State Explanations
+**Learning:** Relying on native alerts to communicate that an action (like saving a game) is invalid because conditions aren't met creates a jarring, disruptive user experience.
+**Action:** Proactively disable buttons when conditions are unmet and use the native `title` attribute to quietly explain why, keeping the user in the flow.
