@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-03-12 - Make Delightful Features Actionable
+**Learning:** Users enjoy 'delight' features like AI predictions, but they provide poor UX if users must manually copy the results to use them. In addition, dynamic regions updating with async data often lack accessibility announcements.
+**Action:** Always bridge novelty features to core utility by providing a direct action button (e.g., 'Jogar Agora') that automatically populates forms and navigates the user, while adding `aria-live='polite'` to ensure screen readers announce the newly generated content.
