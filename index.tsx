@@ -880,7 +880,7 @@ const App = () => {
             <AdBanner />
 
             {/* IA Section */}
-            <div style={styles.aiBox}>
+            <div style={styles.aiBox} aria-live="polite">
               <h3 style={{margin: "0 0 10px 0"}}>Palpite Místico da IA ✨</h3>
               {!aiPrediction ? (
                 <button 
@@ -913,15 +913,33 @@ const App = () => {
                       </div>
                     ))}
                   </div>
-                  <button 
-                    style={{
-                      background: "transparent", border: "1px solid white", color: "white",
-                      marginTop: "15px", padding: "5px 15px", borderRadius: "15px", cursor: "pointer"
-                    }}
-                    onClick={() => setAiPrediction(null)}
-                  >
-                    Gerar Outro
-                  </button>
+                  <div style={{display: "flex", gap: "10px", justifyContent: "center", marginTop: "15px"}}>
+                    <button
+                      style={{
+                        background: "transparent", border: "1px solid white", color: "white",
+                        padding: "8px 15px", borderRadius: "15px", cursor: "pointer", fontWeight: "bold"
+                      }}
+                      onClick={() => setAiPrediction(null)}
+                    >
+                      Gerar Outro
+                    </button>
+                    <button
+                      style={{
+                        background: "white", border: "none", color: "#d97b4f",
+                        padding: "8px 15px", borderRadius: "15px", cursor: "pointer", fontWeight: "bold",
+                        boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
+                      }}
+                      aria-label="Jogar com estes números"
+                      onClick={() => {
+                        const sorted = [...aiPrediction.numbers].sort((a, b) => parseInt(a) - parseInt(b));
+                        setSelectedNumbers(sorted);
+                        setActiveTab('games');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                    >
+                      Jogar Agora
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
