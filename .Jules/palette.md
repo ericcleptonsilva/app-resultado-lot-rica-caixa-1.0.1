@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Proactive Error Prevention
+**Learning:** Relying on `alert()` to block actions (like saving an incomplete game) interrupts user flow and is purely reactive. Users prefer to know what they need to do *before* attempting an action.
+**Action:** Pair disabled states on primary action buttons with descriptive `title` attributes that explain the missing requirement (e.g., "Selecione exatamente 15 números").
