@@ -880,7 +880,7 @@ const App = () => {
             <AdBanner />
 
             {/* IA Section */}
-            <div style={styles.aiBox}>
+            <div style={styles.aiBox} aria-live="polite">
               <h3 style={{margin: "0 0 10px 0"}}>Palpite Místico da IA ✨</h3>
               {!aiPrediction ? (
                 <button 
@@ -913,15 +913,31 @@ const App = () => {
                       </div>
                     ))}
                   </div>
-                  <button 
-                    style={{
-                      background: "transparent", border: "1px solid white", color: "white",
-                      marginTop: "15px", padding: "5px 15px", borderRadius: "15px", cursor: "pointer"
-                    }}
-                    onClick={() => setAiPrediction(null)}
-                  >
-                    Gerar Outro
-                  </button>
+                  <div style={{display: "flex", justifyContent: "center", gap: "10px", marginTop: "15px", flexWrap: "wrap"}}>
+                    <button
+                      style={{
+                        backgroundColor: "white", color: "#d97b4f", border: "none",
+                        padding: "8px 20px", borderRadius: "15px", cursor: "pointer", fontWeight: "bold"
+                      }}
+                      onClick={() => {
+                        setSelectedNumbers([...aiPrediction.numbers].sort((a, b) => parseInt(a, 10) - parseInt(b, 10)));
+                        setActiveTab('games');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      aria-label="Jogar com estes números"
+                    >
+                      Jogar Agora
+                    </button>
+                    <button
+                      style={{
+                        background: "transparent", border: "1px solid white", color: "white",
+                        padding: "8px 20px", borderRadius: "15px", cursor: "pointer"
+                      }}
+                      onClick={() => setAiPrediction(null)}
+                    >
+                      Gerar Outro
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
