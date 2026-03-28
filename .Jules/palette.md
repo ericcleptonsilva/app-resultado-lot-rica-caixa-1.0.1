@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2025-03-09 - Shift from click-triggered alerts to natively disabled states
+**Learning:** Using click-triggered alerts for handling invalid states on primary action buttons leads to a poorer user experience, especially regarding accessibility. Native disabled states along with explanations are much better.
+**Action:** Shift to using native `disabled` attributes alongside `title` attributes explaining why a button is disabled, rather than relying on global modals or alerts to communicate an invalid state.
