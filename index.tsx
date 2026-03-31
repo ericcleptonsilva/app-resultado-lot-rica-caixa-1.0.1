@@ -844,7 +844,7 @@ const App = () => {
       </div>
 
       {/* Content */}
-      <div style={styles.content}>
+      <div style={styles.content} aria-live="polite" aria-busy={loading}>
         
         {loading && (
           <div style={{textAlign: "center", padding: "40px"}}>
@@ -880,7 +880,7 @@ const App = () => {
             <AdBanner />
 
             {/* IA Section */}
-            <div style={styles.aiBox}>
+            <div style={styles.aiBox} aria-live="polite" aria-busy={aiLoading}>
               <h3 style={{margin: "0 0 10px 0"}}>Palpite Místico da IA ✨</h3>
               {!aiPrediction ? (
                 <button 
@@ -913,15 +913,32 @@ const App = () => {
                       </div>
                     ))}
                   </div>
-                  <button 
-                    style={{
-                      background: "transparent", border: "1px solid white", color: "white",
-                      marginTop: "15px", padding: "5px 15px", borderRadius: "15px", cursor: "pointer"
-                    }}
-                    onClick={() => setAiPrediction(null)}
-                  >
-                    Gerar Outro
-                  </button>
+                  <div style={{display: "flex", justifyContent: "center", gap: "10px", marginTop: "15px"}}>
+                    <button
+                      style={{
+                        background: "transparent", border: "1px solid white", color: "white",
+                        padding: "5px 15px", borderRadius: "15px", cursor: "pointer"
+                      }}
+                      onClick={() => setAiPrediction(null)}
+                    >
+                      Gerar Outro
+                    </button>
+                    <button
+                      aria-label="Jogar com estes números"
+                      style={{
+                        background: "white", border: "1px solid white", color: "#d97b4f", fontWeight: "bold",
+                        padding: "5px 15px", borderRadius: "15px", cursor: "pointer"
+                      }}
+                      onClick={() => {
+                        const sortedNumbers = [...aiPrediction.numbers].sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+                        setSelectedNumbers(sortedNumbers);
+                        setActiveTab('games');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                    >
+                      Jogar Agora
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -936,7 +953,7 @@ const App = () => {
 
         {!loading && activeTab === 'stats' && (
           <div role="tabpanel" id="panel-stats" aria-labelledby="tab-stats" tabIndex={0}>
-            <div style={styles.card}>
+            <div style={styles.card} aria-live="polite" aria-busy={loadingStats}>
               <h3 style={{marginTop: 0, color: themeColor}}>Números Quentes 🔥</h3>
               <p style={{fontSize: "14px", color: "#666"}}>Baseado nos últimos 10 concursos.</p>
               
