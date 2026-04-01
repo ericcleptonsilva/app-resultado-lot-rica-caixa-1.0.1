@@ -913,15 +913,32 @@ const App = () => {
                       </div>
                     ))}
                   </div>
-                  <button 
-                    style={{
-                      background: "transparent", border: "1px solid white", color: "white",
-                      marginTop: "15px", padding: "5px 15px", borderRadius: "15px", cursor: "pointer"
-                    }}
-                    onClick={() => setAiPrediction(null)}
-                  >
-                    Gerar Outro
-                  </button>
+                  <div style={{ display: "flex", justifyContent: "center", gap: "10px", marginTop: "15px" }}>
+                    <button
+                      style={{
+                        background: "transparent", border: "1px solid white", color: "white",
+                        padding: "5px 15px", borderRadius: "15px", cursor: "pointer"
+                      }}
+                      onClick={() => setAiPrediction(null)}
+                    >
+                      Gerar Outro
+                    </button>
+                    <button
+                      aria-label="Jogar com estes números"
+                      style={{
+                        background: "white", border: "none", color: "#d97b4f",
+                        padding: "5px 15px", borderRadius: "15px", cursor: "pointer", fontWeight: "bold"
+                      }}
+                      onClick={() => {
+                        const sortedNumbers = [...aiPrediction.numbers].sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+                        setSelectedNumbers(sortedNumbers);
+                        setActiveTab('games');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                    >
+                      Jogar Agora
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
