@@ -676,8 +676,10 @@ const App = () => {
              <button 
                style={styles.button(themeColor, selectedNumbers.length !== config.betLength)}
                onClick={handleAddGame}
+               disabled={selectedNumbers.length !== config.betLength}
+               title={selectedNumbers.length !== config.betLength ? `Para ${config.name}, selecione exatamente ${config.betLength} números.` : ""}
              >
-               <span className="material-icons" style={{fontSize: "18px"}}>add_circle</span> Salvar
+               <span className="material-icons" aria-hidden="true" style={{fontSize: "18px"}}>add_circle</span> Salvar
              </button>
           </div>
         </div>
