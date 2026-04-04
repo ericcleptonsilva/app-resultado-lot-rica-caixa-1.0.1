@@ -676,6 +676,8 @@ const App = () => {
              <button 
                style={styles.button(themeColor, selectedNumbers.length !== config.betLength)}
                onClick={handleAddGame}
+               disabled={selectedNumbers.length !== config.betLength}
+               title={selectedNumbers.length !== config.betLength ? `Selecione exatamente ${config.betLength} números para salvar` : "Salvar jogo"}
              >
                <span className="material-icons" style={{fontSize: "18px"}}>add_circle</span> Salvar
              </button>
@@ -880,7 +882,7 @@ const App = () => {
             <AdBanner />
 
             {/* IA Section */}
-            <div style={styles.aiBox}>
+            <div style={styles.aiBox} aria-live="polite" aria-busy={aiLoading}>
               <h3 style={{margin: "0 0 10px 0"}}>Palpite Místico da IA ✨</h3>
               {!aiPrediction ? (
                 <button 
@@ -913,15 +915,32 @@ const App = () => {
                       </div>
                     ))}
                   </div>
-                  <button 
-                    style={{
-                      background: "transparent", border: "1px solid white", color: "white",
-                      marginTop: "15px", padding: "5px 15px", borderRadius: "15px", cursor: "pointer"
-                    }}
-                    onClick={() => setAiPrediction(null)}
-                  >
-                    Gerar Outro
-                  </button>
+                  <div style={{display: "flex", justifyContent: "center", gap: "10px", marginTop: "15px"}}>
+                    <button
+                      style={{
+                        background: "white", color: "#fda085", border: "none",
+                        padding: "8px 20px", borderRadius: "20px", cursor: "pointer", fontWeight: "bold"
+                      }}
+                      onClick={() => {
+                        const sorted = [...aiPrediction.numbers].sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+                        setSelectedNumbers(sorted);
+                        setActiveTab("games");
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                      aria-label="Jogar com estes números"
+                    >
+                      Jogar Agora
+                    </button>
+                    <button
+                      style={{
+                        background: "transparent", border: "1px solid white", color: "white",
+                        padding: "8px 20px", borderRadius: "20px", cursor: "pointer"
+                      }}
+                      onClick={() => setAiPrediction(null)}
+                    >
+                      Gerar Outro
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
