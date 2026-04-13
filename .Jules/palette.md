@@ -13,3 +13,6 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+## 2024-04-13 - [A11y/Visual] Disabled Button & Decorative Icon Accessibility
+**Learning:** Screen readers announce ligature text like "auto_fix_high" for decorative Material Icons, causing noisy and confusing output. Furthermore, buttons disabled during async operations often lack clear visual cues (e.g. cursor change, opacity drop) to distinguish them from standard enabled buttons visually.
+**Action:** Always add `aria-hidden="true"` to non-semantic decorative icons (`<span className="material-icons">`) and ensure dynamic updates of `cursor` and `opacity` properties for `disabled` states on buttons.
