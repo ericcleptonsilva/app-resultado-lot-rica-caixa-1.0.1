@@ -13,3 +13,4 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+## 2026-10-25 - Async Loading Accessibility\n**Learning:** Standard React loading spinners with text (like "Buscando dados...") are invisible to screen readers unless specifically marked, while ligature icon texts (like "refresh") are read aloud incorrectly.\n**Action:** Always wrap loading containers with `aria-live="polite"` and `aria-busy="true"`. Explicitly hide material-icon ligature texts with `aria-hidden="true"` to prevent redundant/confusing announcements.
