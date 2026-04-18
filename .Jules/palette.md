@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Async Loading Accessibility & Decorative Icons
+**Learning:** Screen readers miss dynamic state changes (like async loading of stats, API results, or AI predictions) unless explicitly instructed to monitor those regions. Also, default `material-icons` `<span/>`s announce raw text ligatures (e.g. 'auto_fix_high'), cluttering the screen reader experience.
+**Action:** Use `aria-live="polite"` alongside `aria-busy={isLoading}` on parent containers to announce dynamic updates smoothly. Always add `aria-hidden="true"` to icon ligature spans to prevent redundant announcements.
