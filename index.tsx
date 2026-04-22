@@ -663,7 +663,7 @@ const App = () => {
                onClick={handleRandomize}
                disabled={selectedNumbers.length >= config.betLength}
              >
-               <span className="material-icons" style={{fontSize: "18px"}}>auto_fix_high</span> Surpresinha
+               <span className="material-icons" style={{fontSize: "18px"}} aria-hidden="true">auto_fix_high</span> Surpresinha
              </button>
              <button
                style={{...styles.button("#9b59b6", selectedNumbers.length >= config.betLength), color: "white"}}
@@ -671,13 +671,13 @@ const App = () => {
                disabled={selectedNumbers.length >= config.betLength}
                title="Estratégia baseada em Gail Howard (Soma, Pares/Ímpares)"
              >
-               <span className="material-icons" style={{fontSize: "18px"}}>psychology</span> Estratégia
+               <span className="material-icons" style={{fontSize: "18px"}} aria-hidden="true">psychology</span> Estratégia
              </button>
              <button 
                style={styles.button(themeColor, selectedNumbers.length !== config.betLength)}
                onClick={handleAddGame}
              >
-               <span className="material-icons" style={{fontSize: "18px"}}>add_circle</span> Salvar
+               <span className="material-icons" style={{fontSize: "18px"}} aria-hidden="true">add_circle</span> Salvar
              </button>
           </div>
         </div>
@@ -813,7 +813,7 @@ const App = () => {
           style={styles.tab(activeTab === 'results', themeColor)} 
           onClick={() => setActiveTab('results')}
         >
-          <span className="material-icons" style={styles.icon}>casino</span>
+          <span className="material-icons" style={styles.icon} aria-hidden="true">casino</span>
           Resultado
         </button>
         <button 
@@ -824,7 +824,7 @@ const App = () => {
           style={styles.tab(activeTab === 'games', themeColor)} 
           onClick={() => setActiveTab('games')}
         >
-          <span className="material-icons" style={styles.icon}>playlist_add_check</span>
+          <span className="material-icons" style={styles.icon} aria-hidden="true">playlist_add_check</span>
           Meus Jogos
         </button>
         <button 
@@ -838,17 +838,17 @@ const App = () => {
             fetchHistoryForStats();
           }}
         >
-          <span className="material-icons" style={styles.icon}>bar_chart</span>
+          <span className="material-icons" style={styles.icon} aria-hidden="true">bar_chart</span>
           Estatísticas
         </button>
       </div>
 
       {/* Content */}
-      <div style={styles.content}>
+      <div style={styles.content} aria-live="polite" aria-busy={loading || loadingStats || aiLoading}>
         
         {loading && (
           <div style={{textAlign: "center", padding: "40px"}}>
-            <span className="material-icons" style={{fontSize: "40px", color: "#ccc", animation: "spin 1s linear infinite"}}>refresh</span>
+            <span className="material-icons" style={{fontSize: "40px", color: "#ccc", animation: "spin 1s linear infinite"}} aria-hidden="true">refresh</span>
             <p>Buscando dados na Caixa...</p>
           </div>
         )}
@@ -891,7 +891,8 @@ const App = () => {
                     padding: "10px 20px", 
                     borderRadius: "20px", 
                     fontWeight: "bold",
-                    cursor: "pointer",
+                    cursor: aiLoading ? "not-allowed" : "pointer",
+                    opacity: aiLoading ? 0.7 : 1,
                     fontSize: "16px"
                   }}
                   onClick={handleGenerateAiPrediction}
@@ -942,7 +943,7 @@ const App = () => {
               
               {loadingStats ? (
                 <div style={{textAlign: "center", padding: "20px"}}>
-                  <span className="material-icons" style={{animation: "spin 1s infinite"}}>autorenew</span>
+                  <span className="material-icons" style={{animation: "spin 1s infinite"}} aria-hidden="true">autorenew</span>
                   <p>Analisando histórico...</p>
                 </div>
               ) : stats.length > 0 ? (
