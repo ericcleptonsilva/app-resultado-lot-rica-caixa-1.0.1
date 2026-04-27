@@ -880,7 +880,7 @@ const App = () => {
             <AdBanner />
 
             {/* IA Section */}
-            <div style={styles.aiBox}>
+            <div style={styles.aiBox} aria-live="polite" aria-busy={aiLoading}>
               <h3 style={{margin: "0 0 10px 0"}}>Palpite Místico da IA ✨</h3>
               {!aiPrediction ? (
                 <button 
@@ -891,8 +891,9 @@ const App = () => {
                     padding: "10px 20px", 
                     borderRadius: "20px", 
                     fontWeight: "bold",
-                    cursor: "pointer",
-                    fontSize: "16px"
+                    cursor: aiLoading ? "not-allowed" : "pointer",
+                    fontSize: "16px",
+                    opacity: aiLoading ? 0.7 : 1
                   }}
                   onClick={handleGenerateAiPrediction}
                   disabled={aiLoading}
@@ -913,15 +914,33 @@ const App = () => {
                       </div>
                     ))}
                   </div>
-                  <button 
-                    style={{
-                      background: "transparent", border: "1px solid white", color: "white",
-                      marginTop: "15px", padding: "5px 15px", borderRadius: "15px", cursor: "pointer"
-                    }}
-                    onClick={() => setAiPrediction(null)}
-                  >
-                    Gerar Outro
-                  </button>
+                  <div style={{display: "flex", justifyContent: "center", gap: "10px", marginTop: "15px"}}>
+                    <button
+                      style={{
+                        background: "white", border: "none", color: "#d97b4f", fontWeight: "bold",
+                        padding: "8px 15px", borderRadius: "15px", cursor: "pointer",
+                        display: "flex", alignItems: "center", gap: "5px"
+                      }}
+                      onClick={() => {
+                        const sortedNumbers = [...aiPrediction.numbers].sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+                        setSelectedNumbers(sortedNumbers);
+                        setActiveTab('games');
+                        setAiPrediction(null);
+                      }}
+                    >
+                      <span className="material-icons" style={{fontSize: "16px"}}>play_arrow</span> Jogar Agora
+                    </button>
+                    <button
+                      style={{
+                        background: "transparent", border: "1px solid white", color: "white",
+                        padding: "8px 15px", borderRadius: "15px", cursor: "pointer",
+                        display: "flex", alignItems: "center", gap: "5px"
+                      }}
+                      onClick={() => setAiPrediction(null)}
+                    >
+                      <span className="material-icons" style={{fontSize: "16px"}}>refresh</span> Outro
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
