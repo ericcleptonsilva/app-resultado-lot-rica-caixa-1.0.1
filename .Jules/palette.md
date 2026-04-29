@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Actionable AI Content and Async Accessibility
+**Learning:** Users experience friction when they receive AI-generated numbers but must manually input them into the grid. Additionally, screen readers are unaware when the AI is fetching new data.
+**Action:** Always make AI predictions immediately actionable (e.g., via a "Jogar Agora" button) to automatically update the primary state, and wrap the container with `aria-live="polite"` and `aria-busy` to dynamically announce state changes.
