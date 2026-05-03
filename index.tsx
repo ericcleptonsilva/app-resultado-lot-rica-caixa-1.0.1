@@ -880,7 +880,7 @@ const App = () => {
             <AdBanner />
 
             {/* IA Section */}
-            <div style={styles.aiBox}>
+            <div style={styles.aiBox} aria-live="polite" aria-busy={aiLoading}>
               <h3 style={{margin: "0 0 10px 0"}}>Palpite Místico da IA ✨</h3>
               {!aiPrediction ? (
                 <button 
@@ -891,7 +891,8 @@ const App = () => {
                     padding: "10px 20px", 
                     borderRadius: "20px", 
                     fontWeight: "bold",
-                    cursor: "pointer",
+                    cursor: aiLoading ? "not-allowed" : "pointer",
+                    opacity: aiLoading ? 0.7 : 1,
                     fontSize: "16px"
                   }}
                   onClick={handleGenerateAiPrediction}
