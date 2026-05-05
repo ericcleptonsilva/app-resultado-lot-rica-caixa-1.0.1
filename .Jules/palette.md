@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-05-05 - Accessible Async Updates
+**Learning:** Loading containers require dynamic aria-live/aria-busy attributes and disabled buttons must use inline styles to override pointer events dynamically.
+**Action:** Applied aria attributes to loading divs and conditional opacity/cursor styles to disabled AI generate button.
