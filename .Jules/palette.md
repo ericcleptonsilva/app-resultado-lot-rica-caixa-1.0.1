@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2024-05-07 - Accessible Async Loading States
+**Learning:** Using basic loading text without `aria-live` or dynamic styling leaves screen reader users unaware of state changes and visually looks identical to a clickable state.
+**Action:** Always add `aria-live="polite"` and `aria-busy={isLoading}` to async containers, and explicitly style disabled buttons with `cursor: "not-allowed"`, reduced `opacity`, and `aria-disabled={isLoading}`.
