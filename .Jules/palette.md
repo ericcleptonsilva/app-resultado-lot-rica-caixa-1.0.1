@@ -13,3 +13,10 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+## $(date +%Y-%m-%d) - Actionable AI Content
+**Learning:** Users experience high friction when AI generates data (like numbers) that must be manually memorized and re-entered into the primary interface.
+**Action:** Always provide an actionable shortcut (e.g., "Jogar Agora") alongside AI-generated content to automatically apply the results to the application state, reducing cognitive load.
+
+## $(date +%Y-%m-%d) - Dynamic Accessibility Properties
+**Learning:** React re-renders can sometimes cause standard `disabled` attributes on buttons to drop temporarily or not be read correctly during complex async transitions.
+**Action:** When dynamically disabling interactive elements for loading states, always explicitly pair the native `disabled={condition}` with `aria-disabled={condition}` for maximum screen reader compatibility.
