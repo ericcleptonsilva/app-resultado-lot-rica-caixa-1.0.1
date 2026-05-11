@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-05-11 - Actionable AI Content
+**Learning:** AI-generated content (such as predictions) should be immediately actionable to reduce user friction.
+**Action:** When providing generated content (like lottery numbers), include a quick action button (e.g., 'Jogar Agora') that automatically applies the result to the primary state and switches context if necessary, rather than requiring manual entry.

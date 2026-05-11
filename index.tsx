@@ -880,7 +880,7 @@ const App = () => {
             <AdBanner />
 
             {/* IA Section */}
-            <div style={styles.aiBox}>
+            <div style={styles.aiBox} aria-live="polite" aria-busy={aiLoading}>
               <h3 style={{margin: "0 0 10px 0"}}>Palpite Místico da IA ✨</h3>
               {!aiPrediction ? (
                 <button 
@@ -891,11 +891,13 @@ const App = () => {
                     padding: "10px 20px", 
                     borderRadius: "20px", 
                     fontWeight: "bold",
-                    cursor: "pointer",
+                    cursor: aiLoading ? "not-allowed" : "pointer",
+                    opacity: aiLoading ? 0.7 : 1,
                     fontSize: "16px"
                   }}
                   onClick={handleGenerateAiPrediction}
                   disabled={aiLoading}
+                  aria-disabled={aiLoading}
                 >
                   {aiLoading ? "Consultando os astros..." : "Gerar Palpite Inteligente"}
                 </button>
@@ -913,15 +915,29 @@ const App = () => {
                       </div>
                     ))}
                   </div>
-                  <button 
-                    style={{
-                      background: "transparent", border: "1px solid white", color: "white",
-                      marginTop: "15px", padding: "5px 15px", borderRadius: "15px", cursor: "pointer"
-                    }}
-                    onClick={() => setAiPrediction(null)}
-                  >
-                    Gerar Outro
-                  </button>
+                  <div style={{display: "flex", justifyContent: "center", gap: "10px", marginTop: "15px"}}>
+                    <button
+                      style={{
+                        background: "white", border: "none", color: "#d97b4f", fontWeight: "bold",
+                        padding: "8px 15px", borderRadius: "15px", cursor: "pointer"
+                      }}
+                      onClick={() => {
+                        setSelectedNumbers(aiPrediction.numbers);
+                        setActiveTab('games');
+                      }}
+                    >
+                      Jogar Agora
+                    </button>
+                    <button
+                      style={{
+                        background: "transparent", border: "1px solid white", color: "white",
+                        padding: "8px 15px", borderRadius: "15px", cursor: "pointer"
+                      }}
+                      onClick={() => setAiPrediction(null)}
+                    >
+                      Gerar Outro
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
