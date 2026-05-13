@@ -174,6 +174,7 @@ const styles = {
     justifyContent: "center",
     gap: "8px",
     flex: 1,
+    opacity: disabled ? 0.7 : 1,
     boxShadow: (disabled || outline) ? "none" : "0 4px 6px rgba(0,0,0,0.1)",
     transition: "transform 0.1s active",
   }),
@@ -847,8 +848,8 @@ const App = () => {
       <div style={styles.content}>
         
         {loading && (
-          <div style={{textAlign: "center", padding: "40px"}}>
-            <span className="material-icons" style={{fontSize: "40px", color: "#ccc", animation: "spin 1s linear infinite"}}>refresh</span>
+          <div style={{textAlign: "center", padding: "40px"}} aria-live="polite" aria-busy="true">
+            <span className="material-icons" style={{fontSize: "40px", color: "#ccc", animation: "spin 1s linear infinite"}} aria-hidden="true">refresh</span>
             <p>Buscando dados na Caixa...</p>
           </div>
         )}
@@ -880,7 +881,7 @@ const App = () => {
             <AdBanner />
 
             {/* IA Section */}
-            <div style={styles.aiBox}>
+            <div style={styles.aiBox} aria-live="polite" aria-busy={aiLoading}>
               <h3 style={{margin: "0 0 10px 0"}}>Palpite Místico da IA ✨</h3>
               {!aiPrediction ? (
                 <button 
@@ -891,11 +892,13 @@ const App = () => {
                     padding: "10px 20px", 
                     borderRadius: "20px", 
                     fontWeight: "bold",
-                    cursor: "pointer",
+                    cursor: aiLoading ? "not-allowed" : "pointer",
+                    opacity: aiLoading ? 0.7 : 1,
                     fontSize: "16px"
                   }}
                   onClick={handleGenerateAiPrediction}
                   disabled={aiLoading}
+                  aria-disabled={aiLoading}
                 >
                   {aiLoading ? "Consultando os astros..." : "Gerar Palpite Inteligente"}
                 </button>
@@ -941,8 +944,8 @@ const App = () => {
               <p style={{fontSize: "14px", color: "#666"}}>Baseado nos últimos 10 concursos.</p>
               
               {loadingStats ? (
-                <div style={{textAlign: "center", padding: "20px"}}>
-                  <span className="material-icons" style={{animation: "spin 1s infinite"}}>autorenew</span>
+                <div style={{textAlign: "center", padding: "20px"}} aria-live="polite" aria-busy="true">
+                  <span className="material-icons" style={{animation: "spin 1s infinite"}} aria-hidden="true">autorenew</span>
                   <p>Analisando histórico...</p>
                 </div>
               ) : stats.length > 0 ? (
