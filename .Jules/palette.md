@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Dynamic Loading States & Decorative Icons
+**Learning:** Decorative font icons (like Google Material Icons) announce their ligature text (e.g., "auto_fix_high") to screen readers if not hidden. Also, dynamically disabling buttons in React during async operations requires explicit ARIA disabled states and styling alongside standard HTML disabled attributes for maximum compatibility during re-renders.
+**Action:** Always hide non-semantic icons with `aria-hidden="true"`. When implementing loading states, use `aria-live="polite"` on the container and ensure disabled buttons include `aria-disabled={condition}`, `cursor: not-allowed`, and reduced opacity.
