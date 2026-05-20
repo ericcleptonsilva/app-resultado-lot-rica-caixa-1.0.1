@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Accessible Disabled States
+**Learning:** During async operations, buttons disabled via the HTML `disabled` attribute might not reliably announce their state to screen readers immediately upon re-render, and they often lack built-in visual feedback (like 'not-allowed' cursor or reduced opacity).
+**Action:** When dynamically disabling interactive elements, always explicitly pair the standard `disabled={condition}` with `aria-disabled={condition}`, and ensure visual CSS feedback such as `cursor: condition ? 'not-allowed' : 'pointer'` and `opacity: condition ? 0.7 : 1` is applied.

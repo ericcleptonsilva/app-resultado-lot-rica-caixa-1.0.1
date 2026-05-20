@@ -167,6 +167,7 @@ const styles = {
     padding: "12px 20px",
     borderRadius: "12px",
     cursor: disabled ? "not-allowed" : "pointer",
+    opacity: disabled ? 0.7 : 1,
     fontWeight: "bold",
     fontSize: "14px",
     display: "flex",
@@ -652,9 +653,10 @@ const App = () => {
 
           <div style={{display: "flex", gap: "10px", marginTop: "15px"}}>
              <button 
-               style={styles.button(themeColor, false, true)}
+               style={styles.button(themeColor, selectedNumbers.length === 0, true)}
                onClick={handleClearSelection}
                disabled={selectedNumbers.length === 0}
+               aria-disabled={selectedNumbers.length === 0}
              >
                Limpar
              </button>
@@ -662,6 +664,7 @@ const App = () => {
                style={{...styles.button("#f6d365", selectedNumbers.length >= config.betLength), color: "#333"}}
                onClick={handleRandomize}
                disabled={selectedNumbers.length >= config.betLength}
+               aria-disabled={selectedNumbers.length >= config.betLength}
              >
                <span className="material-icons" style={{fontSize: "18px"}}>auto_fix_high</span> Surpresinha
              </button>
@@ -669,6 +672,7 @@ const App = () => {
                style={{...styles.button("#9b59b6", selectedNumbers.length >= config.betLength), color: "white"}}
                onClick={handleSmartPick}
                disabled={selectedNumbers.length >= config.betLength}
+               aria-disabled={selectedNumbers.length >= config.betLength}
                title="Estratégia baseada em Gail Howard (Soma, Pares/Ímpares)"
              >
                <span className="material-icons" style={{fontSize: "18px"}}>psychology</span> Estratégia
@@ -676,6 +680,8 @@ const App = () => {
              <button 
                style={styles.button(themeColor, selectedNumbers.length !== config.betLength)}
                onClick={handleAddGame}
+               disabled={selectedNumbers.length !== config.betLength}
+               aria-disabled={selectedNumbers.length !== config.betLength}
              >
                <span className="material-icons" style={{fontSize: "18px"}}>add_circle</span> Salvar
              </button>
@@ -891,11 +897,13 @@ const App = () => {
                     padding: "10px 20px", 
                     borderRadius: "20px", 
                     fontWeight: "bold",
-                    cursor: "pointer",
+                    cursor: aiLoading ? "not-allowed" : "pointer",
+                    opacity: aiLoading ? 0.7 : 1,
                     fontSize: "16px"
                   }}
                   onClick={handleGenerateAiPrediction}
                   disabled={aiLoading}
+                  aria-disabled={aiLoading}
                 >
                   {aiLoading ? "Consultando os astros..." : "Gerar Palpite Inteligente"}
                 </button>
