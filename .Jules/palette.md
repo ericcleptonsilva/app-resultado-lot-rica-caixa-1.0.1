@@ -13,3 +13,11 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Ligature Icons and Screen Readers
+**Learning:** Decorative font icons that use ligatures (like Google Material Icons rendering 'auto_fix_high' or 'psychology') are read aloud by screen readers as the literal ligature text, confusing users.
+**Action:** Always add `aria-hidden="true"` to ligature icon elements (`<span className="material-icons">`) to prevent screen readers from announcing their internal text.
+
+## 2026-10-25 - Dynamic Disabled States
+**Learning:** When interactive elements like buttons are visually disabled or conceptually disabled in logic, failing to set appropriate HTML attributes leaves screen readers unaware of the state change.
+**Action:** When conditionally disabling an element based on a state (e.g. length of selected numbers), explicitly add both `disabled={condition}` and `aria-disabled={condition}` to ensure standard behavior and maximal compatibility during React re-renders.
