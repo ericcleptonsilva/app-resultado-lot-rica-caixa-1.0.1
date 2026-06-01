@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Async Button States
+**Learning:** Simply using the HTML `disabled` attribute during async operations (like API calls) is insufficient for a good UX. Screen readers may lose context or fail to announce state changes, and visually, the button may just look inactive without clarifying that a process is ongoing.
+**Action:** Always pair `disabled={isLoading}` with `aria-disabled={isLoading}`, `aria-busy={isLoading}`, and visual indicators like reduced opacity, a "not-allowed" cursor, and an inline loading spinner to provide clear, accessible feedback for async operations.

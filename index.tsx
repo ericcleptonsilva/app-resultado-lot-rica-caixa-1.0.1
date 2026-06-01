@@ -167,6 +167,7 @@ const styles = {
     padding: "12px 20px",
     borderRadius: "12px",
     cursor: disabled ? "not-allowed" : "pointer",
+    opacity: disabled ? 0.7 : 1,
     fontWeight: "bold",
     fontSize: "14px",
     display: "flex",
@@ -891,12 +892,20 @@ const App = () => {
                     padding: "10px 20px", 
                     borderRadius: "20px", 
                     fontWeight: "bold",
-                    cursor: "pointer",
-                    fontSize: "16px"
+                    cursor: aiLoading ? "not-allowed" : "pointer",
+                    fontSize: "16px",
+                    opacity: aiLoading ? 0.7 : 1,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px"
                   }}
                   onClick={handleGenerateAiPrediction}
                   disabled={aiLoading}
+                  aria-disabled={aiLoading}
+                  aria-busy={aiLoading}
                 >
+                  {aiLoading && <span className="material-icons" aria-hidden="true" style={{ animation: "spin 1s infinite" }}>autorenew</span>}
                   {aiLoading ? "Consultando os astros..." : "Gerar Palpite Inteligente"}
                 </button>
               ) : (
