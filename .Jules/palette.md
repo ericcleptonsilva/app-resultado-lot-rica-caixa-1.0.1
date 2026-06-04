@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Hiding Ligature-Based Icons
+**Learning:** Decorative font icons (like Google Material Icons) that use ligature text (e.g., "auto_fix_high" or "casino") are erroneously announced by screen readers as the literal text, confusing users.
+**Action:** Always include `aria-hidden="true"` on ligature-based icon elements (e.g., `<span className="material-icons" aria-hidden="true">casino</span>`) to prevent screen readers from reading the internal text, allowing the surrounding button or label to provide the semantic context.
