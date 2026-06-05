@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Material Icons Accessibility and Disabled States
+**Learning:** Ligatures in Material Icons are announced verbatim by screen readers. Furthermore, interactive elements changing state dynamically require explicit semantic `aria-disabled` feedback parallel to standard HTML attributes, and visual cues (like cursor/opacity change) for mouse users.
+**Action:** Always add `aria-hidden="true"` to ligature-based icon fonts. Always explicitly bind `aria-disabled` alongside `disabled` properties and add visual overrides (e.g. `cursor: 'not-allowed'`) to communicate dynamic un-interactivity effectively.
