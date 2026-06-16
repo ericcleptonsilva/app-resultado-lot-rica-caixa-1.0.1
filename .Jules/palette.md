@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Meaningful Disabled States
+**Learning:** Users often get frustrated when buttons are disabled without an explanation, and screen readers may skip disabled elements entirely without `aria-disabled`.
+**Action:** Always provide a `title` tooltip explaining *why* a button is disabled (or what it does when active), and duplicate the HTML `disabled` attribute with `aria-disabled` so screen readers announce the state correctly during re-renders.
