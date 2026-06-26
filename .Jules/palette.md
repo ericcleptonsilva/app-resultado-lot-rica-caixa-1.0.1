@@ -13,3 +13,6 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+## 2026-10-25 - Redundant Disabled States
+**Learning:** Adding both `disabled` and `aria-disabled` on interactive elements natively obscures dynamic tooltips (`title`) from screen readers since disabled elements lose focusability. However, fixing missing native `disabled` states is still a baseline net-positive for mouse-driven UX and semantic integrity.
+**Action:** Always verify if a button that looks disabled actually has the HTML attribute. In a full redesign, consider using only `aria-disabled` with manual click prevention to ensure tooltips remain accessible to all users.
