@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2024-06-30 - Action Buttons Accessibility Improvements
+**Learning:** Found that primary action buttons in the "Meus Jogos" tab (Limpar, Surpresinha, Estratégia, Salvar) lacked semantic accessibility attributes indicating their state (like `aria-disabled`), meaning screen reader users wouldn't know why a button was unclickable. Additionally, the decorative Material Icons within the buttons were being read out to screen readers, causing confusion, and there were no tooltips to visually explain the disabled state to sighted users.
+**Action:** Always complement a `disabled={condition}` HTML attribute with an `aria-disabled={condition}` attribute for better screen reader context. Add a dynamic `title` tooltip that explains the reason when disabled versus its action when enabled. Ensure all decorative ligature-based font icons (`<span className="material-icons">`) have `aria-hidden="true"`.
