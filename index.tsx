@@ -655,6 +655,8 @@ const App = () => {
                style={styles.button(themeColor, false, true)}
                onClick={handleClearSelection}
                disabled={selectedNumbers.length === 0}
+               aria-disabled={selectedNumbers.length === 0}
+               title={selectedNumbers.length === 0 ? 'Nenhum número selecionado' : 'Limpar seleção'}
              >
                Limpar
              </button>
@@ -662,22 +664,28 @@ const App = () => {
                style={{...styles.button("#f6d365", selectedNumbers.length >= config.betLength), color: "#333"}}
                onClick={handleRandomize}
                disabled={selectedNumbers.length >= config.betLength}
+               aria-disabled={selectedNumbers.length >= config.betLength}
+               title={selectedNumbers.length >= config.betLength ? 'Máximo de números selecionados' : 'Preencher automaticamente'}
              >
-               <span className="material-icons" style={{fontSize: "18px"}}>auto_fix_high</span> Surpresinha
+               <span className="material-icons" aria-hidden="true" style={{fontSize: "18px"}}>auto_fix_high</span> Surpresinha
              </button>
              <button
                style={{...styles.button("#9b59b6", selectedNumbers.length >= config.betLength), color: "white"}}
                onClick={handleSmartPick}
                disabled={selectedNumbers.length >= config.betLength}
-               title="Estratégia baseada em Gail Howard (Soma, Pares/Ímpares)"
+               aria-disabled={selectedNumbers.length >= config.betLength}
+               title={selectedNumbers.length >= config.betLength ? 'Máximo de números selecionados' : 'Estratégia baseada em Gail Howard (Soma, Pares/Ímpares)'}
              >
-               <span className="material-icons" style={{fontSize: "18px"}}>psychology</span> Estratégia
+               <span className="material-icons" aria-hidden="true" style={{fontSize: "18px"}}>psychology</span> Estratégia
              </button>
              <button 
                style={styles.button(themeColor, selectedNumbers.length !== config.betLength)}
                onClick={handleAddGame}
+               disabled={selectedNumbers.length !== config.betLength}
+               aria-disabled={selectedNumbers.length !== config.betLength}
+               title={selectedNumbers.length !== config.betLength ? `Selecione ${config.betLength} números` : 'Salvar jogo'}
              >
-               <span className="material-icons" style={{fontSize: "18px"}}>add_circle</span> Salvar
+               <span className="material-icons" aria-hidden="true" style={{fontSize: "18px"}}>add_circle</span> Salvar
              </button>
           </div>
         </div>
