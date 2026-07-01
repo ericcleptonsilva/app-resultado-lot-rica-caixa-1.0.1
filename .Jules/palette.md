@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Dynamic Disabled States Context
+**Learning:** Using `disabled` on dynamic buttons (like max items reached, or waiting for API) leaves screen reader users stranded without knowing *why* the button is unavailable.
+**Action:** When conditionally disabling a button, always pair standard `disabled` with `aria-disabled` and a dynamic `title` tooltip explaining the reason (e.g., "Quantidade máxima alcançada" or "Aguardando carregamento").
