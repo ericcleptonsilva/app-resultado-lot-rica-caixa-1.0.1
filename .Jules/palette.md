@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Proactive Form Validation
+**Learning:** Depending on browser `alert()` popups for form validation (like checking the number of selected lotto balls before saving) is jarring and disrupts the user's flow.
+**Action:** Proactively prevent invalid states by adding HTML `disabled` attributes alongside `aria-disabled` and a dynamic `title` tooltip to the action button, guiding the user before they make a mistake.
