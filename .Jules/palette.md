@@ -13,3 +13,11 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2026-10-25 - Proactive Form Validation
+**Learning:** Using browser alerts for validation feedback (like missing selection lengths) disrupts the flow and acts as a retroactive punishment.
+**Action:** Replace retroactive alerts with proactive guidance using the HTML `disabled` attribute, supplemented with `aria-disabled` and dynamic `title` tooltips to explain precisely why an action is unavailable.
+
+## 2026-10-25 - Icon Accessibility
+**Learning:** Font icon ligatures (like Google Material Icons using text such as `auto_fix_high`) are announced literally by screen readers unless hidden, creating a confusing experience.
+**Action:** Always add `aria-hidden="true"` to decorative font icons containing ligature text.
