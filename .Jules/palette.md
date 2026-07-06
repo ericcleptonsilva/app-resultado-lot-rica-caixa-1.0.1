@@ -13,3 +13,7 @@
 ## 2026-10-25 - Accessible Tabs Navigation
 **Learning:** Custom tab implementations using `div`s and `button`s lack semantic meaning for screen readers. Users rely on `role="tablist"`, `role="tab"`, and `role="tabpanel"` to understand the structure.
 **Action:** Always wrap tab buttons in a container with `role="tablist"` and use `aria-selected` and `aria-controls`. Wrap content in `role="tabpanel"` and link via `aria-labelledby`.
+
+## 2024-05-20 - Proactive Action Validation
+**Learning:** Relying on browser `alert()` for validation is disruptive. Missing `aria-disabled` and explanations on disabled buttons confuse screen reader users. Decorative font ligatures without `aria-hidden="true"` are read aloud by screen readers.
+**Action:** Remove validation alerts. Add `disabled` and `aria-disabled` attributes paired with explanatory `title` tooltips on inactive buttons. Add `aria-hidden="true"` to all decorative Material Icons.
